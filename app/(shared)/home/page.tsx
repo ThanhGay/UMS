@@ -1,7 +1,7 @@
-import HomePage from "@/src/views/Home";
+import HomePage from '@views/Home';
 
 function Index() {
-    return <HomePage />;
+  return <HomePage />;
 }
 
 export default Index;

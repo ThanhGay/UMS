@@ -1,7 +1,7 @@
-import LoginPage from "@/src/views/Login";
+import LoginPage from '@views/Login';
 
 function Index() {
-    return <LoginPage />;
+  return <LoginPage />;
 }
 
 export default Index;

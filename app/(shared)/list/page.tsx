@@ -1,5 +1,5 @@
 function Index() {
-    return <div>Chương trình khung</div>;
+  return <div>Chương trình khung</div>;
 }
 
 export default Index;
