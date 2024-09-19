@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './features/authSlice';
+import subjectReducer from './features/subjectSlice';
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      authState: authReducer
+      authState: authReducer,
+      subState: subjectReducer
     }
   });
 };

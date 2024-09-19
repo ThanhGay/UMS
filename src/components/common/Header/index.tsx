@@ -63,6 +63,7 @@ function Header() {
           centered
           size="large"
           defaultActiveKey={pathname}
+          activeKey={pathname}
           items={itemsTab}
           onChange={(activeKey) => router.push(activeKey)}
         />
