@@ -31,6 +31,7 @@ function Index() {
       }
     })();
   }, []);
+
   const columns: TableProps<DataType>['columns'] = [
     {
       title: 'ID',
@@ -110,7 +111,16 @@ function Index() {
     <div className="p-8">
       <Table
         title={() => (
-          <Typography.Title level={3}>Quản lý môn học</Typography.Title>
+          <div className="flex items-center justify-between">
+            <Typography.Title level={3}>Quản lý môn học</Typography.Title>
+            <Button
+              className="create-subject"
+              type="primary"
+              onClick={() => router.push('/admin/subject/create')}
+            >
+              Tạo
+            </Button>
+          </div>
         )}
         rowKey={(value) => value.id}
         columns={columns}

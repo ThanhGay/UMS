@@ -47,7 +47,7 @@ function Index() {
   };
 
   return (
-    <div className="">
+    <div>
       <Button
         type="link"
         icon={<LeftOutlined />}

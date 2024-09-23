@@ -34,3 +34,15 @@ export const apiUpdateSubject = async (args: {
   const { data } = await axios.put(url, reqBody);
   return data ?? {};
 };
+
+export const apiCreateSubject = async (args: {
+  maHocPhan: string;
+  name: string;
+  soTinChi: number;
+}): Promise<{ status: boolean; data: any; message: string }> => {
+  const url = `${SubjectUrl}/create`;
+  const reqBody = args;
+
+  const { data } = await axios.post(url, reqBody);
+  return data ?? {};
+};
