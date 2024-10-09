@@ -1,4 +1,3 @@
-import axiosClient from '@utils/axios';
 import axios from 'axios';
 
 const AuthUrl = `${process.env.BASE_URL_API}/Auth`;
