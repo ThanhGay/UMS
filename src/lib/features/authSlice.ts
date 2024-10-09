@@ -1,10 +1,5 @@
 import { apiLogin } from '@/src/api/auth';
-import {
-  PayloadAction,
-  createAsyncThunk,
-  createSlice,
-  isAnyOf
-} from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export type AuthState = {
   user: any;

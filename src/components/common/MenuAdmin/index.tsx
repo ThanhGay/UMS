@@ -7,7 +7,9 @@ import {
   CarryOutOutlined,
   DesktopOutlined,
   MenuFoldOutlined,
-  MenuUnfoldOutlined
+  MenuUnfoldOutlined,
+  CalendarOutlined,
+  DatabaseOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Button, Menu } from 'antd';
@@ -28,9 +30,19 @@ const items: MenuItem[] = [
     icon: <DesktopOutlined />,
     label: 'Quản lý lớp học phần'
   },
+  // {
+  //   key: '/admin/teacher',
+  //   icon: <CarryOutOutlined />,
+  //   label: 'Quản lý giảng viên'
+  // },
+  {
+    key: '/admin/chuong-trinh-khung',
+    icon: <DatabaseOutlined />,
+    label: 'Chương trình khung'
+  },
   {
     key: '/admin/schedule',
-    icon: <CarryOutOutlined />,
+    icon: <CalendarOutlined />,
     label: 'Thời khóa biểu'
   }
 ];
@@ -68,7 +80,7 @@ const MenuAdmin: React.FC = () => {
           backgroundColor: 'white'
         }}
         icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-      ></Button>
+      />
       <Menu
         mode="inline"
         selectedKeys={[pathname]}
