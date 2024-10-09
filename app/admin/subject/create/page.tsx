@@ -1,29 +1,52 @@
 'use client';
 
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button, Form, Input, InputNumber, Space, Typography } from 'antd';
+import {
+  Button,
+  Form,
+  Input,
+  InputNumber,
+  Select,
+  Space,
+  Typography
+} from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 
 import { Subject } from '@models/index';
 import { apiCreateSubject } from '@/src/api/subject';
 
+const listBoMon = [
+  { value: 123, label: 'Toán tin' },
+  { value: 149, label: 'Công nghệ phần mềm' }
+];
+
 function Index() {
   const [form] = Form.useForm();
   const router = useRouter();
 
+  const [loading, setLoading] = useState(false);
+
   const cancel = () => {
+    setLoading(false);
     form.resetFields();
   };
 
   const handleSubmit = async (values: Subject) => {
+    setLoading(true);
     const frmData = {
       maHocPhan: values.maHocPhan,
       name: values.name,
-      soTinChi: values.soTinChi
+      soTinChi: values.soTinChi,
+      boMonId: values.boMonId
     };
 
     const dataRes = await apiCreateSubject(frmData);
-    if (dataRes.status) router.back();
+
+    if (dataRes) {
+      router.back();
+      setLoading(false);
+    }
   };
 
   return (
@@ -51,19 +74,42 @@ function Index() {
       >
         <Typography.Title level={3}>Tạo thêm môn học</Typography.Title>
 
-        <Form.Item name="maHocPhan" label="Mã học phần" required>
+        <Form.Item
+          name="maHocPhan"
+          label="Mã học phần"
+          rules={[
+            { required: true, message: 'Mã học phần không được để trống' }
+          ]}
+        >
           <Input placeholder="Mã học phần" />
         </Form.Item>
-        <Form.Item name="name" label="Tên môn học" required>
+        <Form.Item
+          name="name"
+          label="Tên môn học"
+          rules={[
+            { required: true, message: 'Tên môn học không được để trống' }
+          ]}
+        >
           <Input placeholder="Tên môn học" />
         </Form.Item>
-        <Form.Item name="soTinChi" label="Số tín chỉ" required>
+        <Form.Item
+          name="soTinChi"
+          label="Số tín chỉ"
+          rules={[{ required: true, message: 'Số tìn chỉ phải từ 1 đến 3' }]}
+        >
           <InputNumber placeholder="Số tín chỉ" max={3} min={1} />
+        </Form.Item>
+        <Form.Item
+          name="boMonId"
+          label="Bộ môn"
+          // rules={[{ required: true, message: 'Vui lòng chọn bộ môn' }]}
+        >
+          <Select placeholder="Bộ môn" options={listBoMon} />
         </Form.Item>
 
         <Form.Item style={{ textAlign: 'center' }}>
           <Space size="large">
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" loading={loading}>
               Tạo mới
             </Button>
             <Button onClick={cancel}>Làm lại</Button>

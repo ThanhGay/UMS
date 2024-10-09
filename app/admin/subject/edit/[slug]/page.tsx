@@ -4,38 +4,43 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Button, Form, Input, InputNumber, Space, Typography } from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
+import dayjs from 'dayjs';
 
 import { Subject } from '@models/index';
-import { formatDate } from '@utils/index';
 import { apiGetDetailSubject, apiUpdateSubject } from '@/src/api/subject';
+import { useAppDispatch } from '@redux/hooks';
+import { getDetailSubject } from '@redux/features/subjectSlice';
 
 function Index() {
   const { slug: id } = useParams();
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const [form] = Form.useForm();
   const [subject, setSubject] = useState<Subject | null>(null);
   const [reload, setReload] = useState<boolean>(false);
 
   useEffect(() => {
+    // dispatch(getDetailSubject({subjectId: id.toString()}))
     (async () => {
       const dataRes = await apiGetDetailSubject(id);
-      if (dataRes.status) {
-        setSubject(dataRes.data);
-        form.setFieldsValue(dataRes.data);
+      if (dataRes) {
+        setSubject(dataRes);
+        form.setFieldsValue(dataRes);
       }
     })();
 
     return () => {
       setReload(false);
     };
-  }, [id, reload]);
+  }, [id, reload, form]);
 
   const handleSubmit = async (values: Subject) => {
     const frmData = {
       id: values.id,
       maHocPhan: values.maHocPhan,
       name: values.name,
+      boMonId: values.boMonId,
       soTinChi: values.soTinChi
     };
     const dataRes = await apiUpdateSubject(frmData);
@@ -88,10 +93,16 @@ function Index() {
         <Form.Item name="soTinChi" label="Số tín chỉ" required>
           <InputNumber placeholder="Số tín chỉ" max={3} min={1} />
         </Form.Item>
+        <Form.Item name="boMonId" label="Bộ môn">
+          <Input
+            placeholder="Bộ môn"
+            style={{ backgroundColor: 'white', color: 'black' }}
+          />
+        </Form.Item>
         <Form.Item label="Lần cuối cập nhật">
           <Input
             placeholder="Ngày cập nhật gần nhất"
-            value={formatDate(subject?.updateAt)}
+            value={dayjs(subject?.updateAt).format('DD/MM/YYYY HH:mm:ss')}
             disabled
             style={{ backgroundColor: 'white', color: 'black' }}
           />

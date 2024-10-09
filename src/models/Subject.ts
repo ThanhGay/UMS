@@ -1,7 +1,8 @@
 export type SubjectModel = {
-  id: string;
+  id: number;
   name: string;
   maHocPhan: string;
+  boMonId: number;
   soTinChi: number;
   createAt: Date;
   updateAt: Date;
