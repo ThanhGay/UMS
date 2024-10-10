@@ -2,13 +2,15 @@ import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './features/authSlice';
 import subjectReducer from './features/subjectSlice';
 import ctkReducer from './features/ctkSlice';
+import classReducer from './features/classSlice';
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       authState: authReducer,
       subState: subjectReducer,
-      ctkState: ctkReducer
+      ctkState: ctkReducer,
+      classState: classReducer
     }
   });
 };

@@ -1,13 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Button, Space, Table, TableProps, Typography } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
+import dayjs from 'dayjs';
 
 import { apiAllTeacher } from '@/src/api/teacher';
 import { formatDate } from '@utils/index';
-import dayjs from 'dayjs';
+import { useAppSelector } from '@redux/hooks';
 
 interface DataType {
   key: string;
@@ -22,20 +22,9 @@ interface DataType {
 }
 
 function Index() {
-  const router = useRouter();
-  const [listTeacher, setListTeacher] = useState([]);
-
-  useEffect(() => {
-    (async () => {
-      //  call api
-      const res = await apiAllTeacher();
-      setListTeacher(res.items);
-
-      // if (res.status) {
-      //   setListTeacher(res.data);
-      // }
-    })();
-  }, []);
+  const { data: listTeacher } = useAppSelector(
+    (state) => state.classState.listTeacher
+  );
 
   const columns: TableProps<DataType>['columns'] = [
     {
