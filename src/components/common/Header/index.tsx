@@ -4,10 +4,12 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Avatar, ConfigProvider, Popover, Tabs, TabsProps } from 'antd';
 
-import { useAppSelector } from '@redux/hooks';
+import { useAppDispatch, useAppSelector } from '@redux/hooks';
+import { logout } from '@redux/features/authSlice';
 
 function Header() {
   const { user } = useAppSelector((state) => state.authState);
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -30,7 +32,10 @@ function Header() {
         <div className="hover:bg-amber-200 p-2">Đổi mật khẩu</div>
         <div
           className="hover:bg-amber-200 p-2"
-          onClick={() => router.push('/')}
+          onClick={() => {
+            dispatch(logout());
+            router.push('/');
+          }}
         >
           Đăng xuất
         </div>
@@ -72,11 +77,15 @@ function Header() {
       {/* Account information */}
       <div className="cursor-pointer">
         <Popover trigger="click" content={<PopoverContent />}>
-          <div className="flex items-center gap-3">
-            <Avatar size={36} />
+          <div className="flex items-center gap-5">
+            <Avatar
+              src={process.env.HIEU_URL + user?.urlImage}
+              style={{ boxShadow: '0 4px 20px lightblue' }}
+              size={36}
+            />
             <div className="flex flex-col text-sm">
               <div>Welcome</div>
-              <div className="font-semibold">{user?.fullName}</div>
+              <div className="font-semibold">{user?.username}</div>
             </div>
           </div>
         </Popover>

@@ -29,8 +29,8 @@ export const getListSubject = createAsyncThunk('subject/all', async () => {
 
 export const getDetailSubject = createAsyncThunk(
   'subject/detail',
-  async (args: { subjectId: string }) => {
-    const dataRes = await apiGetDetailSubject(args);
+  async (subjectId: number) => {
+    const dataRes = await apiGetDetailSubject(subjectId);
     return dataRes;
   }
 );

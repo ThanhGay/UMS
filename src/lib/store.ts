@@ -3,6 +3,7 @@ import authReducer from './features/authSlice';
 import subjectReducer from './features/subjectSlice';
 import ctkReducer from './features/ctkSlice';
 import classReducer from './features/classSlice';
+import generalReducer from './features/generalSlice';
 
 export const makeStore = () => {
   return configureStore({
@@ -10,7 +11,8 @@ export const makeStore = () => {
       authState: authReducer,
       subState: subjectReducer,
       ctkState: ctkReducer,
-      classState: classReducer
+      classState: classReducer,
+      generalState: generalReducer
     }
   });
 };

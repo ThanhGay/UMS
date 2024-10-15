@@ -15,7 +15,7 @@ import { DeleteOutlined, EyeOutlined, PlusOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
-import { deleteCtk, getListCtk } from '@redux/features/ctkSlice';
+import { deleteCtk, getDetailCtk, getListCtk } from '@redux/features/ctkSlice';
 
 type DataType = {
   id: number;
@@ -34,7 +34,7 @@ function Index() {
 
   useEffect(() => {
     dispatch(getListCtk());
-  }, [isDeleted, isCreated]);
+  }, [dispatch, isDeleted, isCreated]);
 
   const columns: TableProps<DataType>['columns'] = [
     {
@@ -84,6 +84,7 @@ function Index() {
               shape="circle"
               icon={<EyeOutlined />}
               onClick={() => {
+                dispatch(getDetailCtk(record.id));
                 router.push(`chuong-trinh-khung/${record.id}`);
               }}
             />

@@ -8,31 +8,22 @@ import dayjs from 'dayjs';
 
 import { Subject } from '@models/index';
 import { apiGetDetailSubject, apiUpdateSubject } from '@/src/api/subject';
-import { useAppDispatch } from '@redux/hooks';
+import { useAppDispatch, useAppSelector } from '@redux/hooks';
 import { getDetailSubject } from '@redux/features/subjectSlice';
 
 function Index() {
   const { slug: id } = useParams();
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const { current } = useAppSelector((state) => state.subState);
 
   const [form] = Form.useForm();
   const [subject, setSubject] = useState<Subject | null>(null);
   const [reload, setReload] = useState<boolean>(false);
 
   useEffect(() => {
-    // dispatch(getDetailSubject({subjectId: id.toString()}))
-    (async () => {
-      const dataRes = await apiGetDetailSubject(id);
-      if (dataRes) {
-        setSubject(dataRes);
-        form.setFieldsValue(dataRes);
-      }
-    })();
-
-    return () => {
-      setReload(false);
-    };
+    setSubject(current);
+    form.setFieldsValue(current);
   }, [id, reload, form]);
 
   const handleSubmit = async (values: Subject) => {

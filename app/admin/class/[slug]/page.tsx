@@ -2,8 +2,9 @@
 
 import { useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Button, Form } from 'antd';
+import { Button, Empty, Form, Input } from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
+import dayjs from 'dayjs';
 
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
 import { detailClass } from '@redux/features/classSlice';
@@ -16,14 +17,10 @@ function Index() {
   const { data } = useAppSelector((state) => state.classState.current);
   const [form] = Form.useForm();
 
-  useEffect(() => {
-    dispatch(detailClass(parseInt(id.toString())));
-  }, [id]);
-
   console.log(data);
 
   return (
-    <div>
+    <div className="p-8">
       <Button
         type="link"
         icon={<LeftOutlined />}
@@ -32,7 +29,20 @@ function Index() {
       >
         Quay lại
       </Button>
-      <Form form={form}></Form>
+      <div>
+        {data ? (
+          <div>
+            {data.map((item: any) => (
+              <div>
+                {data?.roomId} - {data?.caHoc} -{' '}
+                {dayjs(data?.startAt).format('DD/MM/YYYY')}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <Empty />
+        )}
+      </div>
     </div>
   );
 }

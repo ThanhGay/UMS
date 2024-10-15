@@ -9,7 +9,8 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   CalendarOutlined,
-  DatabaseOutlined
+  DatabaseOutlined,
+  TeamOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Button, Menu } from 'antd';
@@ -30,11 +31,11 @@ const items: MenuItem[] = [
     icon: <DesktopOutlined />,
     label: 'Quản lý lớp học phần'
   },
-  // {
-  //   key: '/admin/teacher',
-  //   icon: <CarryOutOutlined />,
-  //   label: 'Quản lý giảng viên'
-  // },
+  {
+    key: '/admin/teacher',
+    icon: <TeamOutlined />,
+    label: 'Danh sách giảng viên'
+  },
   {
     key: '/admin/chuong-trinh-khung',
     icon: <DatabaseOutlined />,

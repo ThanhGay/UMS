@@ -13,6 +13,7 @@ import {
 } from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 import { useAppSelector } from '@redux/hooks';
+import { apiCreateLhp } from '@/src/api/class';
 
 function Index() {
   const [form] = Form.useForm();
@@ -20,7 +21,7 @@ function Index() {
 
   const { listSubject } = useAppSelector((state) => state.subState);
   const { data: listTeachers } = useAppSelector(
-    (state) => state.classState.listTeacher
+    (state) => state.generalState.listTeacher
   );
 
   const [loading, setLoading] = useState(false);
@@ -31,8 +32,11 @@ function Index() {
 
   const handleSubmit = async (values: any) => {
     setLoading(true);
-    console.log(values);
-    setLoading(false);
+    const dataRes = await apiCreateLhp(values);
+    if (dataRes) {
+      setLoading(false);
+      router.back();
+    }
   };
 
   return (
@@ -69,12 +73,12 @@ function Index() {
           rules={[{ required: true, message: 'Vui lòng chọn giảng viên' }]}
         >
           <Select
-            mode="multiple"
+            // mode="multiple"
             placeholder="Giảng viên"
             options={listTeachers.map((item: any) => {
               return {
-                key: item.id,
-                label: item.name
+                value: item.teacherId,
+                label: item.tenGiangVien
               };
             })}
           />

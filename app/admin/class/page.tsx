@@ -14,7 +14,7 @@ import {
 import { DeleteOutlined, EyeOutlined, PlusOutlined } from '@ant-design/icons';
 
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
-import { getListClass } from '@redux/features/classSlice';
+import { detailClass, getListClass } from '@redux/features/classSlice';
 
 type DataType = {
   id: number;
@@ -37,7 +37,7 @@ function Index() {
 
   useEffect(() => {
     dispatch(getListClass());
-  }, [isDeleted, isCreated]);
+  }, [dispatch, isDeleted, isCreated]);
 
   const columns: TableProps<DataType>['columns'] = [
     {
@@ -96,6 +96,7 @@ function Index() {
               shape="circle"
               icon={<EyeOutlined />}
               onClick={() => {
+                dispatch(detailClass(record.id));
                 router.push(`class/${record.id}`);
               }}
             />

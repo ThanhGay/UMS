@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    BASE_URL_API: 'https://localhost:7122/api',
-    HIEU_URL: 'http://192.168.23.229:5024'
+    BASE_URL_API: 'http://localhost:5271/api',
+    // BASE_URL_API: 'http://192.168.59.245:5271/api',
+    HIEU_URL: 'http://192.168.59.229:5026'
   }
 };
 

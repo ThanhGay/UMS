@@ -5,7 +5,12 @@ import { PropsWithChildren, useEffect } from 'react';
 import { useAppDispatch } from '@redux/hooks';
 import { getListCtk } from '@redux/features/ctkSlice';
 import { getListSubject } from '@redux/features/subjectSlice';
-import { getListClass, getListTeacher } from '@redux/features/classSlice';
+import { getListClass } from '@redux/features/classSlice';
+import {
+  getListBoMon,
+  getListChuyenNganh,
+  getListTeacher
+} from '@redux/features/generalSlice';
 
 function LayoutState(props: PropsWithChildren) {
   const { children } = props;
@@ -13,11 +18,12 @@ function LayoutState(props: PropsWithChildren) {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getListCtk());
-    dispatch(getListSubject());
     dispatch(getListClass());
-    dispatch(getListCtk());
+    dispatch(getListBoMon());
     dispatch(getListTeacher());
-  }, []);
+    dispatch(getListSubject());
+    dispatch(getListChuyenNganh());
+  }, [dispatch]);
 
   return <div>{children}</div>;
 }

@@ -39,7 +39,7 @@ export const apiCreateSchedule = async (args: {
 
 export const apiCreateLhp = async (args: {
   className: string;
-  teacherId: number;
+  teacherId: string;
   subjectId: number;
   pricePerTinChi: number;
 }) => {

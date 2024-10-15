@@ -1,31 +1,33 @@
 import axios from 'axios';
 
-const AuthUrl = `${process.env.BASE_URL_API}/Auth`;
+const AuthUrl = `${process.env.HIEU_URL}`;
 
-export const apiLogin = async (args: { email: string; password: string }) => {
-  const url = `${AuthUrl}/login`;
+export const apiLoginStudent = async (args: {
+  email: string;
+  password: string;
+}) => {
+  const url = `${AuthUrl}/Login-student`;
 
-  const form = new FormData();
-  form.append('Email', args.email);
-  form.append('Password', args.password);
-
-  const { data } = await axios.post(url, form);
+  const { data } = await axios.post(url, args);
   return data ?? {};
 };
 
-export const apiLoginWithOTP = async ({
-  email,
-  otp
-}: {
+export const apiLoginTeacher = async (args: {
   email: string;
-  otp: string;
+  password: string;
 }) => {
-  const url = `${AuthUrl}/login-otp`;
+  const url = `${AuthUrl}/Login-teacher`;
 
-  const fmData = new FormData();
-  fmData.append('Email', email);
-  fmData.append('OTP', otp);
+  const { data } = await axios.post(url, args);
+  return data ?? {};
+};
 
-  const { data } = await axios.post(url, fmData);
+export const apiLoginAdmin = async (args: {
+  email: string;
+  password: string;
+}) => {
+  const url = `${AuthUrl}/Login-manager`;
+
+  const { data } = await axios.post(url, args);
   return data ?? {};
 };

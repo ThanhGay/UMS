@@ -14,7 +14,6 @@ type REF_STATE = {
 };
 
 export type ClassState = {
-  listTeacher: REF_STATE;
   listClass: REF_STATE;
   current: REF_STATE;
   isCreated: boolean;
@@ -22,11 +21,6 @@ export type ClassState = {
 };
 
 const initialState: ClassState = {
-  listTeacher: {
-    loading: false,
-    error: false,
-    data: []
-  },
   listClass: {
     loading: false,
     error: false,
@@ -46,19 +40,11 @@ export const getListClass = createAsyncThunk('classHP/list', async () => {
   if (res) return res.items;
 });
 
-export const getListTeacher = createAsyncThunk(
-  'classHP/listTeacher',
-  async () => {
-    const res = await apiAllTeacher();
-    if (res) return res.items;
-  }
-);
-
 export const createClass = createAsyncThunk(
   'classHP/create',
   async (args: {
     className: string;
-    teacherId: number;
+    teacherId: string;
     subjectId: number;
     pricePerTinChi: number;
   }) => {
@@ -87,22 +73,6 @@ const classSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getListTeacher.pending, (state) => {
-        state.listTeacher.loading = true;
-        state.listTeacher.error = false;
-      })
-      .addCase(
-        getListTeacher.fulfilled,
-        (state, action: PayloadAction<any[]>) => {
-          state.listTeacher.loading = false;
-          state.listTeacher.error = false;
-          state.listTeacher.data = action.payload;
-        }
-      )
-      .addCase(getListTeacher.rejected, (state) => {
-        state.listTeacher.loading = false;
-        state.listTeacher.error = true;
-      })
       .addCase(getListClass.pending, (state) => {
         state.listClass.loading = true;
         state.listClass.error = false;

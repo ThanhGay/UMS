@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Button, Form, Typography } from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
@@ -19,10 +19,6 @@ function Index() {
   } = useAppSelector((state) => state.ctkState.current);
 
   const [form] = Form.useForm();
-
-  useEffect(() => {
-    dispatch(getDetailCtk(parseInt(id.toString())));
-  }, [id]);
 
   const handleSubmit = async (values: any) => {
     console.log(values);

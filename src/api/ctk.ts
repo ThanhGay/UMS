@@ -11,7 +11,7 @@ export const apiAllCtk = async () => {
 };
 
 export const apiDetailCtk = async (id: number) => {
-  const url = `${CtkUrl}/get/${id}`;
+  const url = `${CtkUrl}/get-by-id/${id}`;
 
   const { data } = await axios.get(url);
 

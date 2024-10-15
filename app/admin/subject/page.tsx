@@ -16,7 +16,11 @@ import dayjs from 'dayjs';
 
 import { SubjectModel } from '@models/Subject';
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
-import { deleteSubject, getListSubject } from '@redux/features/subjectSlice';
+import {
+  deleteSubject,
+  getDetailSubject,
+  getListSubject
+} from '@redux/features/subjectSlice';
 
 function Index() {
   const router = useRouter();
@@ -27,7 +31,7 @@ function Index() {
   );
   useEffect(() => {
     dispatch(getListSubject());
-  }, [isDeleted]);
+  }, [dispatch, isDeleted]);
 
   const handleDelete = async (id: number) => {
     await dispatch(deleteSubject(id));
@@ -93,6 +97,7 @@ function Index() {
               shape="circle"
               icon={<EditOutlined />}
               onClick={() => {
+                dispatch(getDetailSubject(record.id));
                 router.push(`subject/edit/${record.id}`);
               }}
             />

@@ -21,7 +21,7 @@ export const apiUpdateSubject = async (args: {
   maHocPhan: string;
   name: string;
   soTinChi: number;
-  boMonId: number;
+  boMonId: string;
 }) => {
   const url = `${SubjectUrl}/update`;
   const reqBody = args;
@@ -34,7 +34,7 @@ export const apiCreateSubject = async (args: {
   maHocPhan: string;
   name: string;
   soTinChi: number;
-  boMonId: number;
+  boMonId: string;
 }) => {
   const url = `${SubjectUrl}/create`;
   const reqBody = args;

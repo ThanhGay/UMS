@@ -1,12 +1,16 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Button, Space, Table, TableProps, Typography } from 'antd';
-import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
+import {
+  Button,
+  ConfigProvider,
+  Space,
+  Table,
+  TableProps,
+  Typography
+} from 'antd';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 
-import { apiAllTeacher } from '@/src/api/teacher';
-import { formatDate } from '@utils/index';
 import { useAppSelector } from '@redux/hooks';
 
 interface DataType {
@@ -23,12 +27,12 @@ interface DataType {
 
 function Index() {
   const { data: listTeacher } = useAppSelector(
-    (state) => state.classState.listTeacher
+    (state) => state.generalState.listTeacher
   );
 
   const columns: TableProps<DataType>['columns'] = [
     {
-      title: 'ID',
+      title: 'Mã giảng viên',
       dataIndex: 'teacherId',
       key: 'teacherId',
       align: 'center'
@@ -65,75 +69,30 @@ function Index() {
       dataIndex: 'boMonId',
       key: 'boMonId',
       align: 'center'
-    },
-    {
-      title: 'Ngày tạo',
-      dataIndex: 'createAt',
-      key: 'createAt',
-      align: 'center',
-      render: (value) => {
-        const formatedDate = formatDate(value);
-        return <div className="text-start">{formatedDate}</div>;
-      }
-    },
-    {
-      title: 'Cập nhật',
-      dataIndex: 'updateAt',
-      key: 'updateAt',
-      align: 'center',
-      render: (value) => {
-        const formatedDate = formatDate(value);
-        return <div className="text-start">{formatedDate}</div>;
-      }
-    },
-    {
-      title: 'Thao tác',
-      dataIndex: 'action',
-      key: 'action',
-      align: 'center',
-      render: (_, record) => (
-        <Space>
-          <Button
-            type="primary"
-            shape="circle"
-            icon={<EditOutlined />}
-            onClick={() => {
-              // router.push(`subject/edit/${record.teacherId}`);
-            }}
-          />
-          <Button
-            type="primary"
-            shape="circle"
-            icon={<DeleteOutlined />}
-            onClick={() => {
-              console.log('deleted: ', record.teacherId);
-            }}
-          />
-        </Space>
-      )
     }
   ];
 
   return (
     <div className="p-8">
-      <Table
-        title={() => (
-          <div className="flex items-center justify-between">
-            <Typography.Title level={3}>Quản lý giảng viên</Typography.Title>
-            <Button
-              type="primary"
-              icon={<PlusOutlined />}
-              // onClick={() => router.push('/admin/subject/create')}
-            >
-              Tạo
-            </Button>
-          </div>
-        )}
-        rowKey={(value) => value.teacherId}
-        columns={columns}
-        dataSource={listTeacher}
-        pagination={{ position: ['bottomCenter'] }}
-      />
+      <ConfigProvider
+        theme={{
+          components: {
+            Pagination: {
+              itemBg: 'transparent'
+            }
+          }
+        }}
+      >
+        <Table
+          title={() => (
+            <Typography.Title level={3}>Danh sách giảng viên</Typography.Title>
+          )}
+          rowKey={(value) => value.teacherId}
+          columns={columns}
+          dataSource={listTeacher}
+          pagination={{ position: ['bottomCenter'] }}
+        />
+      </ConfigProvider>
     </div>
   );
 }
