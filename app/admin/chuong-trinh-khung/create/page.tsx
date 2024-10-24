@@ -9,15 +9,12 @@ import { SubjectModel } from '@models/Subject';
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
 import { createCtk } from '@redux/features/ctkSlice';
 
-const listChuyenNganh = [
-  { value: 1235, label: 'Khoa học máy tính' },
-  { value: 1238, label: 'Công nghệ thông tin' },
-  { value: 1239, label: 'Tin học xây dựng' }
-];
-
 function Index() {
   const dispatch = useAppDispatch();
   const { listSubject } = useAppSelector((state) => state.subState);
+  const { data: listChuyenNganh } = useAppSelector(
+    (state) => state.generalState.listChuyenNganh
+  );
 
   const router = useRouter();
   const [form] = Form.useForm();
@@ -53,6 +50,8 @@ function Index() {
     };
 
     const response = await dispatch(createCtk(result));
+    console.log(response);
+
     if (response.meta.requestStatus === 'fulfilled') router.back();
   };
 
@@ -88,7 +87,12 @@ function Index() {
         >
           <Select
             placeholder="Chọn chuyên ngành cần tạo"
-            options={listChuyenNganh}
+            options={listChuyenNganh.map((item: any) => {
+              return {
+                value: item.nganhId,
+                label: item.tenNganh
+              };
+            })}
           />
         </Form.Item>
 

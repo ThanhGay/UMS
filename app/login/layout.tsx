@@ -9,7 +9,9 @@ export const metadata: Metadata = {
 function Layout(props: PropsWithChildren) {
   const { children } = props;
   return (
-    <div className="flex justify-center items-center h-screen">{children}</div>
+    <div className="flex justify-center items-center min-h-screen">
+      {children}
+    </div>
   );
 }
 

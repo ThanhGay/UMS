@@ -27,9 +27,10 @@ export const apiCreateCtk = async (args: {
 }) => {
   const url = `${CtkUrl}/create`;
 
-  const { data } = await axios.post(url, args);
+  const dataRes = await axios.post(url, args);
+  console.log(dataRes);
 
-  return data ?? {};
+  return dataRes.data ?? {};
 };
 
 export const apiDeleteCtk = async (id: any) => {

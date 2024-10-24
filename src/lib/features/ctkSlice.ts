@@ -17,6 +17,7 @@ export type CtkState = {
   current: REF_STATE;
   isDeleted: boolean;
   isCreated: boolean;
+  errorMessage: string;
 };
 
 const initialState: CtkState = {
@@ -31,7 +32,8 @@ const initialState: CtkState = {
     data: null
   },
   isDeleted: false,
-  isCreated: false
+  isCreated: false,
+  errorMessage: ''
 };
 
 export const getListCtk = createAsyncThunk('ctKhung/all', async () => {
@@ -63,6 +65,7 @@ export const createCtk = createAsyncThunk(
     details: { kiHoc: string; monHocIds: number[] }[];
   }) => {
     const res = await apiCreateCtk(args);
+    console.log(res);
 
     if (res) return res;
   }
@@ -125,7 +128,7 @@ const ctkSlice = createSlice({
         state.list.error = false;
         state.isCreated = true;
       })
-      .addCase(createCtk.rejected, (state) => {
+      .addCase(createCtk.rejected, (state, action: PayloadAction<any>) => {
         state.list.loading = false;
         state.list.error = true;
         state.isCreated = false;

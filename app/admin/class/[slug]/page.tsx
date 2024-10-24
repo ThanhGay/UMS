@@ -20,7 +20,7 @@ function Index() {
   console.log(data);
 
   return (
-    <div className="p-8">
+    <div>
       <Button
         type="link"
         icon={<LeftOutlined />}

@@ -25,7 +25,7 @@ function LayoutState(props: PropsWithChildren) {
     dispatch(getListChuyenNganh());
   }, [dispatch]);
 
-  return <div>{children}</div>;
+  return <>{children}</>;
 }
 
 export default LayoutState;

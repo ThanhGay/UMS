@@ -4,7 +4,7 @@ import {
   apiGetScheduleOfLHP,
   apiGetStudentsOfLHP
 } from '@/src/api/class';
-import { apiAllTeacher } from '@/src/api/teacher';
+import { apiAllTeacher } from '@/src/api/general';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type REF_STATE = {

@@ -7,17 +7,17 @@ import { Avatar, ConfigProvider, Popover, Tabs, TabsProps } from 'antd';
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
 import { logout } from '@redux/features/authSlice';
 
-function Header() {
-  const { user } = useAppSelector((state) => state.authState);
+function StudentHeader() {
   const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.authState);
   const router = useRouter();
   const pathname = usePathname();
 
   const itemsTab: TabsProps['items'] = [
-    { label: 'Trang chủ', key: '/home' },
-    { label: 'Kết quả học tập', key: '/result' },
-    { label: 'Lịch theo tuần', key: '/weekly-schedule' },
-    { label: 'Chương trình khung', key: '/list' }
+    { label: 'Trang chủ', key: '/student/home' },
+    { label: 'Kết quả học tập', key: '/student/result' },
+    { label: 'Lịch theo tuần', key: '/student/weekly-schedule' },
+    { label: 'Chương trình khung', key: '/student/list' }
   ];
 
   const PopoverContent = () => {
@@ -46,7 +46,10 @@ function Header() {
   return (
     <div className="absolute bg-[#0F30A7] text-white flex items-center justify-around gap-12 w-full px-12">
       {/* Logo */}
-      <div className="cursor-pointer" onClick={() => router.push('/home')}>
+      <div
+        className="cursor-pointer"
+        onClick={() => router.push('/student/home')}
+      >
         HUCE
       </div>
 
@@ -94,4 +97,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default StudentHeader;

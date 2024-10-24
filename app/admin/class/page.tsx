@@ -122,39 +122,35 @@ function Index() {
   };
 
   return (
-    <div className="p-8">
-      <ConfigProvider
-        theme={{
-          components: {
-            Pagination: {
-              itemBg: 'transparent'
-            }
+    <ConfigProvider
+      theme={{
+        components: {
+          Pagination: {
+            itemBg: 'transparent'
           }
-        }}
-      >
-        <Table
-          loading={loading}
-          title={() => (
-            <div className="flex items-center justify-between">
-              <Typography.Title level={3}>
-                Quản lý lớp học phần
-              </Typography.Title>
-              <Button
-                type="primary"
-                icon={<PlusOutlined />}
-                onClick={() => router.push('class/create')}
-              >
-                Tạo
-              </Button>
-            </div>
-          )}
-          rowKey={(value) => value.id}
-          columns={columns}
-          dataSource={listClass}
-          pagination={{ position: ['bottomCenter'], defaultPageSize: 10 }}
-        />
-      </ConfigProvider>
-    </div>
+        }
+      }}
+    >
+      <Table
+        loading={loading}
+        title={() => (
+          <div className="flex items-center justify-between">
+            <Typography.Title level={3}>Quản lý lớp học phần</Typography.Title>
+            <Button
+              type="primary"
+              icon={<PlusOutlined />}
+              onClick={() => router.push('class/create')}
+            >
+              Tạo
+            </Button>
+          </div>
+        )}
+        rowKey={(value) => value.id}
+        columns={columns}
+        dataSource={listClass}
+        pagination={{ position: ['bottomCenter'], defaultPageSize: 10 }}
+      />
+    </ConfigProvider>
   );
 }
 

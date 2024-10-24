@@ -41,13 +41,16 @@ function Index() {
     {
       title: 'Id',
       dataIndex: 'id',
-      key: 'id'
+      key: 'id',
+      align: 'center',
+      width: '8%'
     },
     {
       title: 'Mã học phần',
       dataIndex: 'maHocPhan',
       key: 'maHocPhan',
       align: 'center',
+      width: '15%',
       render: (value) => <div className="text-start">{value}</div>
     },
     {
@@ -61,13 +64,15 @@ function Index() {
       title: 'Số tín chỉ',
       dataIndex: 'soTinChi',
       key: 'soTinChi',
-      align: 'center'
+      align: 'center',
+      width: '10%'
     },
     {
       title: 'Bộ môn',
       dataIndex: 'boMonId',
       key: 'boMonId',
-      align: 'center'
+      align: 'center',
+      width: '10%'
     },
     {
       title: 'Ngày tạo',
@@ -88,6 +93,7 @@ function Index() {
       dataIndex: 'action',
       key: 'action',
       align: 'center',
+      width: '15%',
       render: (_, record) => (
         <Space>
           <Tooltip title="Edit">
@@ -117,37 +123,36 @@ function Index() {
   ];
 
   return (
-    <div className="p-8">
-      <ConfigProvider
-        theme={{
-          components: {
-            Pagination: {
-              itemBg: 'transparent'
-            }
+    <ConfigProvider
+      theme={{
+        components: {
+          Pagination: {
+            itemBg: 'transparent'
           }
-        }}
-      >
-        <Table
-          loading={loading}
-          title={() => (
-            <div className="flex items-center justify-between">
-              <Typography.Title level={3}>Quản lý môn học</Typography.Title>
-              <Button
-                type="primary"
-                icon={<PlusOutlined />}
-                onClick={() => router.push('/admin/subject/create')}
-              >
-                Tạo
-              </Button>
-            </div>
-          )}
-          rowKey={(value) => value.id}
-          columns={columns}
-          dataSource={listSubject}
-          pagination={{ position: ['bottomCenter'], defaultPageSize: 10 }}
-        />
-      </ConfigProvider>
-    </div>
+        }
+      }}
+    >
+      <Table
+        loading={loading}
+        title={() => (
+          <div className="flex items-center justify-between">
+            <Typography.Title level={3}>Quản lý môn học</Typography.Title>
+            <Button
+              type="primary"
+              icon={<PlusOutlined />}
+              onClick={() => router.push('/admin/subject/create')}
+            >
+              Tạo
+            </Button>
+          </div>
+        )}
+        rowKey={(value) => value.id}
+        columns={columns}
+        dataSource={listSubject}
+        pagination={{ position: ['bottomCenter'], defaultPageSize: 10 }}
+        scroll={{ y: 65 * 10 }}
+      />
+    </ConfigProvider>
   );
 }
 

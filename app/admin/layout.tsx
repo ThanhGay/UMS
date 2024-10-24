@@ -13,7 +13,7 @@ function Index(props: PropsWithChildren) {
   return (
     <Layout className="h-screen">
       <MenuAdmin />
-      <Content>{children}</Content>
+      <Content style={{ padding: 32 }}>{children}</Content>
     </Layout>
   );
 }

@@ -1,9 +1,9 @@
-import SharedLayout from '@/src/layout/SharedLayout';
+import StudentLayout from '@/src/layout/StudentLayout';
 import { PropsWithChildren } from 'react';
 
 function Layout(props: PropsWithChildren) {
   const { children } = props;
-  return <SharedLayout>{children}</SharedLayout>;
+  return <StudentLayout>{children}</StudentLayout>;
 }
 
 export default Layout;

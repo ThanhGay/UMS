@@ -1,5 +1,5 @@
 import { apiAllBuilding } from '@/src/api/room';
-import { apiAllBoMon, apiAllNganh, apiAllTeacher } from '@/src/api/teacher';
+import { apiAllBoMon, apiAllNganh, apiAllTeacher } from '@/src/api/general';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type REF_STATE = {

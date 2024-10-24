@@ -6,7 +6,7 @@ export const metadata: Metadata = {
 };
 function Index(props: PropsWithChildren) {
   const { children } = props;
-  return <div className="p-8">{children}</div>;
+  return <>{children}</>;
 }
 
 export default Index;

@@ -53,9 +53,10 @@ function LoginPage2() {
 
       switch (user_type) {
         case 'student':
-          router.push('/home');
+          router.push('/student/home');
           break;
         case 'teacher':
+          router.push('/teacher');
           break;
         case 'admin':
           router.push('/admin');

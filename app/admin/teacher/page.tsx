@@ -73,27 +73,25 @@ function Index() {
   ];
 
   return (
-    <div className="p-8">
-      <ConfigProvider
-        theme={{
-          components: {
-            Pagination: {
-              itemBg: 'transparent'
-            }
+    <ConfigProvider
+      theme={{
+        components: {
+          Pagination: {
+            itemBg: 'transparent'
           }
-        }}
-      >
-        <Table
-          title={() => (
-            <Typography.Title level={3}>Danh sách giảng viên</Typography.Title>
-          )}
-          rowKey={(value) => value.teacherId}
-          columns={columns}
-          dataSource={listTeacher}
-          pagination={{ position: ['bottomCenter'] }}
-        />
-      </ConfigProvider>
-    </div>
+        }
+      }}
+    >
+      <Table
+        title={() => (
+          <Typography.Title level={3}>Danh sách giảng viên</Typography.Title>
+        )}
+        rowKey={(value) => value.teacherId}
+        columns={columns}
+        dataSource={listTeacher}
+        pagination={{ position: ['bottomCenter'] }}
+      />
+    </ConfigProvider>
   );
 }
 
