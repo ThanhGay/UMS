@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const ClassURL = `${process.env.BASE_URL_API}/LopHP`;
+const ScheduleURL = `${process.env.BASE_URL_API}/Schedule`;
 
 export const apiAllClassHP = async () => {
   const url = `${ClassURL}/all`;
@@ -10,14 +11,22 @@ export const apiAllClassHP = async () => {
 };
 
 export const apiGetScheduleOfLHP = async (lhpId: number) => {
-  const url = `${ClassURL}/schedule/${lhpId}`;
+  const url = `${ScheduleURL}/lopHp/${lhpId}`;
 
   const { data } = await axios.get(url);
   return data ?? {};
 };
 
+export const apiGetDetailLopHp = async (lhpId: number) => {
+  const url = `${ClassURL}/get/${lhpId}`
+
+  const {data } = await axios.get(url)
+
+  return data ?? {}
+};
+
 export const apiGetStudentsOfLHP = async (lhpId: number) => {
-  const url = `${ClassURL}/students/${lhpId}`;
+  const url = `${ClassURL}/get-students/${lhpId}`;
 
   const { data } = await axios.get(url);
   return data ?? {};
@@ -31,7 +40,7 @@ export const apiCreateSchedule = async (args: {
   endAt: string;
   dayOfWeek: number;
 }) => {
-  const url = `${ClassURL}/create-schedule`;
+  const url = `${ScheduleURL}/create-schedule-lopHp`;
 
   const { data } = await axios.post(url, args);
   return data ?? {};

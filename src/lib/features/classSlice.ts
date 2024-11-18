@@ -1,6 +1,7 @@
 import {
   apiAllClassHP,
   apiCreateLhp,
+  apiGetDetailLopHp,
   apiGetScheduleOfLHP,
   apiGetStudentsOfLHP
 } from '@/src/api/class';
@@ -56,14 +57,10 @@ export const createClass = createAsyncThunk(
 export const detailClass = createAsyncThunk(
   'classHP/detail',
   async (lhpId: number) => {
-    const res1 = await apiGetScheduleOfLHP(lhpId);
-    // const res2 = await apiGetStudentsOfLHP(lhpId)
+    const dataRes = await apiGetDetailLopHp(lhpId);
+    
 
-    // if (res1 && res2) {
-    //     // concat data and return
-    // }
-
-    if (res1) return res1;
+    if (dataRes) return dataRes;
   }
 );
 

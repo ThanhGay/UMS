@@ -66,9 +66,14 @@ function Index() {
     },
     {
       title: 'Giảng viên',
-      dataIndex: 'teacherId',
-      key: 'teacherId',
-      align: 'center'
+      dataIndex: 'teacherIds',
+      key: 'teacherIds',
+      align: 'center',
+      render: (value) => {
+          return <div className='flex gap-1'>{value.map((id: any, idx: number) => (
+            <p key={idx}>{id},</p>
+          ))}</div>
+      },
     },
     {
       title: 'Số tín chỉ',

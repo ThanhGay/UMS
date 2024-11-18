@@ -15,17 +15,17 @@ import { LeftOutlined } from '@ant-design/icons';
 
 import { Subject } from '@models/index';
 import { apiCreateSubject } from '@/src/api/subject';
-
-const listBoMon = [
-  { value: 123, label: 'Toán tin' },
-  { value: 149, label: 'Công nghệ phần mềm' }
-];
+import { useAppSelector } from '@redux/hooks';
 
 function Index() {
   const [form] = Form.useForm();
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
+
+  const { data: listBoMon } = useAppSelector(
+    (state) => state.generalState.listBoMon
+  );
 
   const cancel = () => {
     setLoading(false);
@@ -104,7 +104,15 @@ function Index() {
           label="Bộ môn"
           // rules={[{ required: true, message: 'Vui lòng chọn bộ môn' }]}
         >
-          <Select placeholder="Bộ môn" options={listBoMon} />
+          <Select
+            placeholder="Bộ môn"
+            options={listBoMon.map((item: any) => {
+              return {
+                value: item.boMonId,
+                label: item.tenBoMon
+              };
+            })}
+          />
         </Form.Item>
 
         <Form.Item style={{ textAlign: 'center' }}>

@@ -2,20 +2,30 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Button, Form, Input, InputNumber, Space, Typography } from 'antd';
+import {
+  Button,
+  Form,
+  Input,
+  InputNumber,
+  Select,
+  Space,
+  Typography
+} from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 
 import { Subject } from '@models/index';
-import { apiGetDetailSubject, apiUpdateSubject } from '@/src/api/subject';
+import { apiUpdateSubject } from '@/src/api/subject';
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
-import { getDetailSubject } from '@redux/features/subjectSlice';
 
 function Index() {
   const { slug: id } = useParams();
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { current } = useAppSelector((state) => state.subState);
+  const { data: listBoMon } = useAppSelector(
+    (state) => state.generalState.listBoMon
+  );
 
   const [form] = Form.useForm();
   const [subject, setSubject] = useState<Subject | null>(null);
@@ -85,9 +95,13 @@ function Index() {
           <InputNumber placeholder="Số tín chỉ" max={3} min={1} />
         </Form.Item>
         <Form.Item name="boMonId" label="Bộ môn">
-          <Input
-            placeholder="Bộ môn"
-            style={{ backgroundColor: 'white', color: 'black' }}
+          <Select
+            options={listBoMon.map((item: any) => {
+              return {
+                value: item.boMonId,
+                label: item.tenBoMon
+              };
+            })}
           />
         </Form.Item>
         <Form.Item label="Lần cuối cập nhật">

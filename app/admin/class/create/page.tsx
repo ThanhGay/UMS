@@ -27,6 +27,7 @@ function Index() {
   const [loading, setLoading] = useState(false);
 
   const cancel = () => {
+    setLoading(false)
     form.resetFields();
   };
 
@@ -68,12 +69,12 @@ function Index() {
           <Input placeholder="Tên lớp học" />
         </Form.Item>
         <Form.Item
-          name="teacherId"
+          name="teacherIds"
           label="Giảng viên"
           rules={[{ required: true, message: 'Vui lòng chọn giảng viên' }]}
         >
           <Select
-            // mode="multiple"
+            mode="multiple"
             placeholder="Giảng viên"
             options={listTeachers.map((item: any) => {
               return {

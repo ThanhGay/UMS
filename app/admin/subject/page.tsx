@@ -15,6 +15,7 @@ import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 
 import { SubjectModel } from '@models/Subject';
+import { HieuSubjectModel } from '@models/Subject_Hieu';
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
 import {
   deleteSubject,
@@ -37,17 +38,11 @@ function Index() {
     await dispatch(deleteSubject(id));
   };
 
-  const columns: TableProps<SubjectModel>['columns'] = [
-    {
-      title: 'Id',
-      dataIndex: 'id',
-      key: 'id',
-      align: 'center',
-      width: '8%'
-    },
+  const columns: TableProps<HieuSubjectModel>['columns'] = [
+    
     {
       title: 'Mã học phần',
-      dataIndex: 'maHocPhan',
+      dataIndex: 'maMonHoc',
       key: 'maHocPhan',
       align: 'center',
       width: '15%',
@@ -55,14 +50,14 @@ function Index() {
     },
     {
       title: 'Tên môn học',
-      dataIndex: 'name',
+      dataIndex: 'tenMon',
       key: 'name',
       align: 'center',
       render: (value) => <div className="text-start">{value}</div>
     },
     {
       title: 'Số tín chỉ',
-      dataIndex: 'soTinChi',
+      dataIndex: 'soTin',
       key: 'soTinChi',
       align: 'center',
       width: '10%'
@@ -74,52 +69,7 @@ function Index() {
       align: 'center',
       width: '10%'
     },
-    {
-      title: 'Ngày tạo',
-      dataIndex: 'createAt',
-      key: 'createAt',
-      align: 'center',
-      render: (value) => <div>{dayjs(value).format('DD/MM/YYYY HH:mm')}</div>
-    },
-    {
-      title: 'Cập nhật',
-      dataIndex: 'updateAt',
-      key: 'updateAt',
-      align: 'center',
-      render: (value) => <div>{dayjs(value).format('DD/MM/YYYY HH:mm')}</div>
-    },
-    {
-      title: 'Thao tác',
-      dataIndex: 'action',
-      key: 'action',
-      align: 'center',
-      width: '15%',
-      render: (_, record) => (
-        <Space>
-          <Tooltip title="Edit">
-            <Button
-              className="edit-btn"
-              type="primary"
-              shape="circle"
-              icon={<EditOutlined />}
-              onClick={() => {
-                dispatch(getDetailSubject(record.id));
-                router.push(`subject/edit/${record.id}`);
-              }}
-            />
-          </Tooltip>
-          <Tooltip title="Delete">
-            <Button
-              className="delete-btn"
-              type="primary"
-              shape="circle"
-              icon={<DeleteOutlined />}
-              onClick={() => handleDelete(record.id)}
-            />
-          </Tooltip>
-        </Space>
-      )
-    }
+    
   ];
 
   return (
@@ -146,7 +96,7 @@ function Index() {
             </Button>
           </div>
         )}
-        rowKey={(value) => value.id}
+        rowKey={(value) => value.maMonHoc}
         columns={columns}
         dataSource={listSubject}
         pagination={{ position: ['bottomCenter'], defaultPageSize: 10 }}
