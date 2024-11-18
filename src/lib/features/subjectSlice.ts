@@ -4,11 +4,12 @@ import {
   apiGetDetailSubject
 } from '@/src/api/subject';
 import { Subject } from '@models/index';
+import { HieuSubjectModel } from '@models/Subject_Hieu';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type SubjectState = {
-  listSubject: Subject[];
-  current: Subject | null;
+  listSubject: HieuSubjectModel[];
+  current: HieuSubjectModel | null;
   loading: boolean;
   error: boolean;
   isDeleted: boolean;

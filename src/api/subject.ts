@@ -4,8 +4,9 @@ const SubjectUrl = `${process.env.BASE_URL_API}/Subject`;
 
 export const apiAllSubject = async () => {
   const url = `${SubjectUrl}/all`;
+  const urlHieu = `${process.env.HIEU_URL}/Get-all-mon-hoc-chi-tiet`
 
-  const { data } = await axios.get(url);
+  const { data } = await axios.get(urlHieu);
   return data ?? {};
 };
 
