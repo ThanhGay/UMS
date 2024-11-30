@@ -22,16 +22,10 @@ export const apiGetDetailSubject = async (maMonHoc: any) => {
   return data ?? {};
 };
 
-export const apiUpdateSubject = async (args: {
-  maMonHoc: string;
-  tenMon: string;
-  sotin: number;
-  boMonId: string;
-}) => {
-  const url = `${SubjectUrl}/Update-mon-hoc`;
-  const reqBody = args;
+export const apiGetSubjectByIds = async (subjectIds: string[]) => {
+  const url = `${SubjectUrl}/get-mon-hoc-by-Id-2`;
 
-  const { data } = await axios.put(url, reqBody, {
+  const { data } = await axios.post(url, subjectIds, {
     headers: { 'ngrok-skip-browser-warning': 'any_value' }
   });
 
