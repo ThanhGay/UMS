@@ -2,13 +2,22 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button, Form, Input, notification, Select, Spin } from 'antd';
+import {
+  Button,
+  Form,
+  Input,
+  notification,
+  Select,
+  Spin,
+  Typography
+} from 'antd';
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
 import {
   authLoginAdmin,
   authLoginStudent,
   authLoginTeacher
 } from '@redux/features/authSlice';
+import Image from 'next/image';
 
 function LoginPage2() {
   const { loginCode, loading, user_type } = useAppSelector(
@@ -76,6 +85,15 @@ function LoginPage2() {
       ) : (
         <div>
           {contextHolder}
+          <div className="flex flex-col items-center justify-center mb-4">
+            <Typography.Title level={1}>Chào mừng</Typography.Title>
+            <Image
+              src={'/images/logo.png'}
+              alt="logo"
+              width={240}
+              height={240}
+            />
+          </div>
           <Form
             form={form}
             layout="vertical"
@@ -108,7 +126,7 @@ function LoginPage2() {
                 }
               ]}
             >
-              <Input placeholder="Password" />
+              <Input.Password placeholder="Password" />
             </Form.Item>
             <Form.Item
               name="role"
@@ -127,7 +145,12 @@ function LoginPage2() {
               />
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit">
+              <Button
+                type="primary"
+                htmlType="submit"
+                style={{ width: '100%' }}
+                size="large"
+              >
                 Đăng nhập
               </Button>
             </Form.Item>

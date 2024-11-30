@@ -1,15 +1,22 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Button, Empty, Form, Input, Tabs, Typography } from 'antd';
+import { Button, Tabs, Typography } from 'antd';
 import type { TabsProps } from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
-import dayjs from 'dayjs';
 
+import { apiGetStudentInClass, apiGetTeacherInClass } from '@/src/api/class';
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
-import { detailClass } from '@redux/features/classSlice';
+import { setListStudent, setListTeacher } from '@redux/features/classSlice';
+import {
+  getDetailSubject,
+  resetCurrentSubject
+} from '@redux/features/subjectSlice';
+
 import GeneralInformation from '@components/class/GeneralInformation';
+import ClassList from '@components/class/ClassList';
+import ClassSchedule from '@components/class/ClassSchedule';
 
 function Index() {
   const { slug: id } = useParams();
@@ -17,25 +24,40 @@ function Index() {
   const dispatch = useAppDispatch();
 
   const { data } = useAppSelector((state) => state.classState.current);
-  const [form] = Form.useForm();
 
-  console.log(data);
+  useEffect(() => {
+    (async () => {
+      if (data?.students) {
+        const res = await apiGetStudentInClass(data.students);
+        dispatch(setListStudent(res.items));
+      }
+
+      if (data?.teachers) {
+        const res = await apiGetTeacherInClass(data.teachers);
+        dispatch(setListTeacher(res.items));
+      }
+
+      if (data?.maMonHoc) {
+        dispatch(getDetailSubject(data.maMonHoc));
+      }
+    })();
+  }, [id]);
 
   const items: TabsProps['items'] = [
     {
       key: '1',
       label: 'Thông tin chung',
-      children: <GeneralInformation data={data} />
+      children: <GeneralInformation />
     },
     {
       key: '2',
-      label: 'Danh sách sinh viên',
-      children: 'Content of Tab Pane 2'
+      label: 'Danh sách lớp',
+      children: <ClassList />
     },
     {
       key: '3',
       label: 'Lịch tổng quan',
-      children: 'Content of Tab Pane 3'
+      children: <ClassSchedule />
     }
   ];
 
@@ -45,15 +67,16 @@ function Index() {
         type="link"
         icon={<LeftOutlined />}
         style={{ color: 'black', fontSize: 16, paddingLeft: 0 }}
-        onClick={() => router.back()}
+        onClick={async () => {
+          dispatch(resetCurrentSubject());
+          router.back();
+        }}
       >
         Quay lại
       </Button>
       <div className="bg-white rounded-xl p-5 mt-5">
-        <Typography.Title level={3}>
-          Chi tiết lớp học phần
-        </Typography.Title>
-        <Tabs items={items}  />
+        <Typography.Title level={3}>Chi tiết lớp học phần</Typography.Title>
+        <Tabs items={items} />
       </div>
     </div>
   );

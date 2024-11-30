@@ -6,7 +6,7 @@ import { Button, Form, Typography } from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
 
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
-import { getDetailCtk } from '@redux/features/ctkSlice';
+import { getDetailCtk, resetCurrentCtk } from '@redux/features/ctkSlice';
 
 function Index() {
   const { slug: id } = useParams();
@@ -32,7 +32,10 @@ function Index() {
         type="link"
         icon={<LeftOutlined />}
         style={{ color: 'black', fontSize: 16, paddingLeft: 0 }}
-        onClick={() => router.back()}
+        onClick={() => {
+          dispatch(resetCurrentCtk());
+          router.back();
+        }}
       >
         Quay lại
       </Button>

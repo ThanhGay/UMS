@@ -1,21 +1,24 @@
 'use client';
 
 import React, { useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { Button, Menu } from 'antd';
+import type { MenuProps } from 'antd';
 import {
   HomeOutlined,
   BookOutlined,
-  CarryOutOutlined,
   DesktopOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   CalendarOutlined,
   DatabaseOutlined,
-  TeamOutlined
+  TeamOutlined,
+  PoweroffOutlined
 } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Button, Menu } from 'antd';
 import Sider from 'antd/es/layout/Sider';
-import { usePathname, useRouter } from 'next/navigation';
+
+import { useAppDispatch } from '@redux/hooks';
+import { logout } from '@redux/features/authSlice';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -24,7 +27,7 @@ const items: MenuItem[] = [
   {
     key: '/admin/subject',
     icon: <BookOutlined />,
-    label: 'Quản lý môn học'
+    label: 'Danh sách môn học'
   },
   {
     key: '/admin/class',
@@ -51,6 +54,7 @@ const items: MenuItem[] = [
 const MenuAdmin: React.FC = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const dispatch = useAppDispatch();
 
   const [collapsed, setCollapsed] = useState(false);
 
@@ -60,6 +64,11 @@ const MenuAdmin: React.FC = () => {
 
   const onClick: MenuProps['onClick'] = (e) => {
     router.push(e.key);
+  };
+
+  const handleLogout = async () => {
+    dispatch(logout());
+    router.push('/login');
   };
 
   return (
@@ -90,6 +99,17 @@ const MenuAdmin: React.FC = () => {
         onClick={onClick}
         items={items}
       />
+      <div className="absolute bottom-5 w-full">
+        <Button
+          type="primary"
+          size="large"
+          icon={<PoweroffOutlined />}
+          style={{ width: '100%' }}
+          onClick={handleLogout}
+        >
+          {collapsed ? '' : 'Logout'}
+        </Button>
+      </div>
     </Sider>
   );
 };

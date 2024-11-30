@@ -46,15 +46,18 @@ export const getListTeacher = createAsyncThunk(
   }
 );
 
-export const getListBoMon = createAsyncThunk('general/listBoMon', async () => {
-  const res = await apiAllBoMon();
-  if (res) return res.items;
-});
+export const getListBoMon = createAsyncThunk(
+  'general/listBoMon',
+  async (token: string) => {
+    const res = await apiAllBoMon(token);
+    if (res) return res.items;
+  }
+);
 
 export const getListChuyenNganh = createAsyncThunk(
   'general/listChuyenNganh',
-  async () => {
-    const res = await apiAllNganh();
+  async (token: string) => {
+    const res = await apiAllNganh(token);
     if (res) return res.items;
   }
 );

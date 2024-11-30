@@ -8,7 +8,7 @@ import { AntdRegistry } from '@ant-design/nextjs-registry';
 import StoreProvider from './StoreProvider';
 import LayoutState from '@/src/layout/LayoutState';
 
-import './globals.css';
+import './globals.scss';
 
 const geistSans = localFont({
   src: '../src/assests/fonts/GeistVF.woff',

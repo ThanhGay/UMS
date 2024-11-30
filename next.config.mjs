@@ -1,9 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+        port: '',
+        pathname: '**'
+      }
+    ]
+  },
   env: {
-    BASE_URL_API: 'http://localhost:5271/api',
-    // BASE_URL_API: 'http://192.168.59.245:5271/api',
-    HIEU_URL: 'http://192.168.48.229:5026'
+    BASE_URL_API: 'https://7af6-116-96-47-79.ngrok-free.app/api',
+    HIEU_URL:
+      'https://9fc5-2001-ee0-41c1-12a6-c86-a8c8-438b-9c09.ngrok-free.app'
   }
 };
 

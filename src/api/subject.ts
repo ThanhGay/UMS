@@ -1,53 +1,80 @@
 import axios from 'axios';
 
-const SubjectUrl = `${process.env.BASE_URL_API}/Subject`;
+const SubjectUrl = `${process.env.HIEU_URL}`;
 
 export const apiAllSubject = async () => {
-  const url = `${SubjectUrl}/all`;
-  const urlHieu = `${process.env.HIEU_URL}/Get-all-mon-hoc-chi-tiet`
+  const urlHieu = `${SubjectUrl}/Get-all-mon-hoc`;
 
-  const { data } = await axios.get(urlHieu);
+  const { data } = await axios.get(urlHieu, {
+    headers: { 'ngrok-skip-browser-warning': 'any_value' }
+  });
+
   return data ?? {};
 };
 
-export const apiGetDetailSubject = async (subjectId: any) => {
-  const url = `${SubjectUrl}/get/${subjectId}`;
+export const apiGetDetailSubject = async (maMonHoc: any) => {
+  const urlHieu = `${SubjectUrl}/Get-mon-hoc-by-Id?KeyWord=${maMonHoc}`;
 
-  const { data } = await axios.get(url);
+  const { data } = await axios.get(urlHieu, {
+    headers: { 'ngrok-skip-browser-warning': 'any_value' }
+  });
+
   return data ?? {};
 };
 
 export const apiUpdateSubject = async (args: {
-  id: number;
-  maHocPhan: string;
-  name: string;
-  soTinChi: number;
+  maMonHoc: string;
+  tenMon: string;
+  sotin: number;
   boMonId: string;
 }) => {
-  const url = `${SubjectUrl}/update`;
+  const url = `${SubjectUrl}/Update-mon-hoc`;
   const reqBody = args;
 
-  const { data } = await axios.put(url, reqBody);
+  const { data } = await axios.put(url, reqBody, {
+    headers: { 'ngrok-skip-browser-warning': 'any_value' }
+  });
+
   return data ?? {};
 };
 
-export const apiCreateSubject = async (args: {
-  maHocPhan: string;
-  name: string;
-  soTinChi: number;
-  boMonId: string;
-}) => {
-  const url = `${SubjectUrl}/create`;
+export const apiCreateSubject = async (
+  args: {
+    maMonHoc: string;
+    tenMon: string;
+    sotin: number;
+    boMonId: string;
+  },
+  token: string
+) => {
+  const url = `${SubjectUrl}/Add-Mon-Hoc`;
   const reqBody = args;
 
-  const { data } = await axios.post(url, reqBody);
+  const { data } = await axios.post(url, reqBody, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'ngrok-skip-browser-warning': 'any_value'
+    }
+  });
   return data ?? {};
 };
 
-export const apiDeleteSubject = async (subjectId: any) => {
-  const url = `${SubjectUrl}/delete?id=${subjectId}`;
+export const apiDeleteSubject = async (maMonHoc: string) => {
+  const url = `${SubjectUrl}/Delete-mon-hoc?maMonHoc=${maMonHoc}`;
 
-  const { data } = await axios.delete(url);
+  const { data } = await axios.delete(url, {
+    headers: { 'ngrok-skip-browser-warning': 'any_value' }
+  });
+
+  return data ?? {};
+};
+
+export const apiGetTeacherBySubject = async (maMonHoc: string) => {
+  const url = `${SubjectUrl}/Get-teacher-phu-trach?maMonHoc=${maMonHoc}`;
+
+  const { data } = await axios.delete(url, {
+    headers: { 'ngrok-skip-browser-warning': 'any_value' }
+  });
 
   return data ?? {};
 };

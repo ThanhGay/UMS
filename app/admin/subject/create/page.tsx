@@ -21,6 +21,8 @@ function Index() {
   const [form] = Form.useForm();
   const router = useRouter();
 
+  const { token } = useAppSelector((state) => state.authState);
+
   const [loading, setLoading] = useState(false);
 
   const { data: listBoMon } = useAppSelector(
@@ -35,13 +37,13 @@ function Index() {
   const handleSubmit = async (values: Subject) => {
     setLoading(true);
     const frmData = {
-      maHocPhan: values.maHocPhan,
-      name: values.name,
-      soTinChi: values.soTinChi,
+      maMonHoc: values.maHocPhan,
+      tenMon: values.name,
+      sotin: values.soTinChi,
       boMonId: values.boMonId
     };
 
-    const dataRes = await apiCreateSubject(frmData);
+    const dataRes = await apiCreateSubject(frmData, token);
 
     if (dataRes) {
       router.back();

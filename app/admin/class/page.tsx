@@ -19,8 +19,8 @@ import { detailClass, getListClass } from '@redux/features/classSlice';
 type DataType = {
   id: number;
   className: string;
-  maHocPhan: string;
-  subjectName: string;
+  maMonHoc: string;
+  tenMonHoc: string;
   teacherId: number;
   soTinChi: number;
   pricePerTinChi: number;
@@ -54,14 +54,14 @@ function Index() {
     },
     {
       title: 'Mã học phần',
-      dataIndex: 'maHocPhan',
-      key: 'maHocPhan',
+      dataIndex: 'maMonHoc',
+      key: 'maMonHoc',
       align: 'center'
     },
     {
       title: 'Môn học',
-      dataIndex: 'subjectName',
-      key: 'subjectName',
+      dataIndex: 'tenMonHoc',
+      key: 'tenMonHoc',
       align: 'center'
     },
     {
@@ -70,10 +70,14 @@ function Index() {
       key: 'teacherIds',
       align: 'center',
       render: (value) => {
-          return <div className='flex gap-1'>{value.map((id: any, idx: number) => (
-            <p key={idx}>{id},</p>
-          ))}</div>
-      },
+        return (
+          <div className="flex gap-1">
+            {value.map((id: any, idx: number) => (
+              <p key={idx}>{id},</p>
+            ))}
+          </div>
+        );
+      }
     },
     {
       title: 'Số tín chỉ',

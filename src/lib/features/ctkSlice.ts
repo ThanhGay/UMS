@@ -74,7 +74,13 @@ export const createCtk = createAsyncThunk(
 const ctkSlice = createSlice({
   name: 'ctKhung',
   initialState,
-  reducers: {},
+  reducers: {
+    resetCurrentCtk: (state) => {
+      state.current.data = null;
+      state.current.error = false;
+      state.current.loading = false;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getListCtk.pending, (state) => {
@@ -138,6 +144,6 @@ const ctkSlice = createSlice({
 
 const ctkReducer = ctkSlice.reducer;
 
-export const {} = ctkSlice.actions;
+export const { resetCurrentCtk } = ctkSlice.actions;
 
 export default ctkReducer;

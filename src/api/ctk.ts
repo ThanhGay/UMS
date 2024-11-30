@@ -5,7 +5,9 @@ const CtkUrl = `${process.env.BASE_URL_API}/ChuongTrinhKhung`;
 export const apiAllCtk = async () => {
   const url = `${CtkUrl}/all`;
 
-  const { data } = await axios.get(url);
+  const { data } = await axios.get(url, {
+    headers: { 'ngrok-skip-browser-warning': 'any_value' }
+  });
 
   return data ?? {};
 };
@@ -13,7 +15,9 @@ export const apiAllCtk = async () => {
 export const apiDetailCtk = async (id: number) => {
   const url = `${CtkUrl}/get-by-id/${id}`;
 
-  const { data } = await axios.get(url);
+  const { data } = await axios.get(url, {
+    headers: { 'ngrok-skip-browser-warning': 'any_value' }
+  });
 
   return data ?? {};
 };
@@ -27,16 +31,19 @@ export const apiCreateCtk = async (args: {
 }) => {
   const url = `${CtkUrl}/create`;
 
-  const dataRes = await axios.post(url, args);
-  console.log(dataRes);
+  const { data } = await axios.post(url, args, {
+    headers: { 'ngrok-skip-browser-warning': 'any_value' }
+  });
 
-  return dataRes.data ?? {};
+  return data ?? {};
 };
 
 export const apiDeleteCtk = async (id: any) => {
   const url = `${CtkUrl}/delete?id=${id}`;
 
-  const { data } = await axios.delete(url);
+  const { data } = await axios.delete(url, {
+    headers: { 'ngrok-skip-browser-warning': 'any_value' }
+  });
 
   return data ?? {};
 };

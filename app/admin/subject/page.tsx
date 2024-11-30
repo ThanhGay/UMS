@@ -2,26 +2,12 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import {
-  Button,
-  ConfigProvider,
-  Space,
-  Table,
-  TableProps,
-  Tooltip,
-  Typography
-} from 'antd';
-import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import dayjs from 'dayjs';
+import { Button, ConfigProvider, Table, TableProps, Typography } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 
-import { SubjectModel } from '@models/Subject';
 import { HieuSubjectModel } from '@models/Subject_Hieu';
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
-import {
-  deleteSubject,
-  getDetailSubject,
-  getListSubject
-} from '@redux/features/subjectSlice';
+import { getListSubject } from '@redux/features/subjectSlice';
 
 function Index() {
   const router = useRouter();
@@ -30,22 +16,18 @@ function Index() {
   const { listSubject, loading, isDeleted } = useAppSelector(
     (state) => state.subState
   );
+
   useEffect(() => {
     dispatch(getListSubject());
   }, [dispatch, isDeleted]);
 
-  const handleDelete = async (id: number) => {
-    await dispatch(deleteSubject(id));
-  };
-
   const columns: TableProps<HieuSubjectModel>['columns'] = [
-    
     {
-      title: 'Mã học phần',
+      title: 'Mã môn học',
       dataIndex: 'maMonHoc',
       key: 'maHocPhan',
       align: 'center',
-      width: '15%',
+      width: '20%',
       render: (value) => <div className="text-start">{value}</div>
     },
     {
@@ -60,16 +42,15 @@ function Index() {
       dataIndex: 'soTin',
       key: 'soTinChi',
       align: 'center',
-      width: '10%'
+      width: '15%'
     },
     {
       title: 'Bộ môn',
       dataIndex: 'boMonId',
       key: 'boMonId',
       align: 'center',
-      width: '10%'
-    },
-    
+      width: '15%'
+    }
   ];
 
   return (
@@ -86,21 +67,23 @@ function Index() {
         loading={loading}
         title={() => (
           <div className="flex items-center justify-between">
-            <Typography.Title level={3}>Quản lý môn học</Typography.Title>
-            <Button
+            <Typography.Title level={3}>Danh sách môn học</Typography.Title>
+
+            {/* Tạo môn học */}
+            {/* <Button
               type="primary"
               icon={<PlusOutlined />}
               onClick={() => router.push('/admin/subject/create')}
             >
               Tạo
-            </Button>
+            </Button> */}
           </div>
         )}
         rowKey={(value) => value.maMonHoc}
         columns={columns}
         dataSource={listSubject}
         pagination={{ position: ['bottomCenter'], defaultPageSize: 10 }}
-        scroll={{ y: 65 * 10 }}
+        // scroll={{ y: 65 * 10 }}
       />
     </ConfigProvider>
   );

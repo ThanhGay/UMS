@@ -12,31 +12,51 @@ import {
   Typography
 } from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
-import { useAppSelector } from '@redux/hooks';
+
 import { apiCreateLhp } from '@/src/api/class';
+import { useAppDispatch, useAppSelector } from '@redux/hooks';
+import {
+  getDetailSubject,
+  resetCurrentSubject
+} from '@redux/features/subjectSlice';
 
 function Index() {
   const [form] = Form.useForm();
   const router = useRouter();
 
+  const dispatch = useAppDispatch();
+  const current = useAppSelector((state) => state.subState.current);
   const { listSubject } = useAppSelector((state) => state.subState);
-  const { data: listTeachers } = useAppSelector(
-    (state) => state.generalState.listTeacher
-  );
 
   const [loading, setLoading] = useState(false);
 
   const cancel = () => {
-    setLoading(false)
+    setLoading(false);
     form.resetFields();
+  };
+
+  const handleChangeSubject = async (value: string) => {
+    dispatch(getDetailSubject(value));
+  };
+
+  const handleBack = async () => {
+    dispatch(resetCurrentSubject());
+    router.back();
   };
 
   const handleSubmit = async (values: any) => {
     setLoading(true);
-    const dataRes = await apiCreateLhp(values);
+    const dataRes = await apiCreateLhp({
+      className: values.className,
+      maMonHoc: current.maMonHoc,
+      tenMonHoc: current.tenMon,
+      soTinChi: current.soTin,
+      pricePerTinChi: values.pricePerTinChi,
+      teacherIds: values.teacherIds
+    });
     if (dataRes) {
       setLoading(false);
-      router.back();
+      handleBack();
     }
   };
 
@@ -46,7 +66,7 @@ function Index() {
         type="link"
         icon={<LeftOutlined />}
         style={{ color: 'black', fontSize: 16, paddingLeft: 0 }}
-        onClick={() => router.back()}
+        onClick={handleBack}
       >
         Quay lại
       </Button>
@@ -68,22 +88,6 @@ function Index() {
         <Form.Item name="className" label="Tên lớp">
           <Input placeholder="Tên lớp học" />
         </Form.Item>
-        <Form.Item
-          name="teacherIds"
-          label="Giảng viên"
-          rules={[{ required: true, message: 'Vui lòng chọn giảng viên' }]}
-        >
-          <Select
-            mode="multiple"
-            placeholder="Giảng viên"
-            options={listTeachers.map((item: any) => {
-              return {
-                value: item.teacherId,
-                label: item.tenGiangVien
-              };
-            })}
-          />
-        </Form.Item>
 
         <Form.Item
           name="subjectId"
@@ -92,14 +96,32 @@ function Index() {
         >
           <Select
             placeholder="Bộ môn"
+            onChange={handleChangeSubject}
             options={listSubject.map((item: any) => {
               return {
-                value: item.id,
+                value: item.maMonHoc,
                 label: (
                   <div>
-                    {item.maHocPhan} - {item.name}
+                    {item.maMonHoc} - {item.tenMon}
                   </div>
                 )
+              };
+            })}
+          />
+        </Form.Item>
+
+        <Form.Item
+          name="teacherIds"
+          label="Giảng viên"
+          rules={[{ required: true, message: 'Vui lòng chọn giảng viên' }]}
+        >
+          <Select
+            mode="multiple"
+            placeholder="Giảng viên"
+            options={current?.teacherDtos?.map((item: any) => {
+              return {
+                value: item.teacherId,
+                label: item.tenGiangVien
               };
             })}
           />

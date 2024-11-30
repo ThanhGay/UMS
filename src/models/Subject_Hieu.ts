@@ -3,5 +3,4 @@ export type HieuSubjectModel = {
   tenMon: string;
   soTin: number;
   boMonId: string;
-  
 };

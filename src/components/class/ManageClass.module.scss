@@ -1,0 +1,14 @@
+.popoverContainer {
+  .item {
+    margin: 4px 0;
+    padding: 4px;
+    cursor: pointer;
+    &:hover {
+      background-color: gainsboro;
+    }
+  }
+}
+
+.tableSchedule {
+  margin-top: 16px;
+}

@@ -2,28 +2,33 @@
 
 import { PropsWithChildren, useEffect } from 'react';
 
-import { useAppDispatch } from '@redux/hooks';
+import { useAppDispatch, useAppSelector } from '@redux/hooks';
 import { getListCtk } from '@redux/features/ctkSlice';
 import { getListSubject } from '@redux/features/subjectSlice';
 import { getListClass } from '@redux/features/classSlice';
 import {
   getListBoMon,
   getListChuyenNganh,
+  getListPhong,
   getListTeacher
 } from '@redux/features/generalSlice';
 
 function LayoutState(props: PropsWithChildren) {
   const { children } = props;
+  const { token } = useAppSelector((state) => state.authState);
 
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getListCtk());
     dispatch(getListClass());
-    dispatch(getListBoMon());
     dispatch(getListTeacher());
     dispatch(getListSubject());
-    dispatch(getListChuyenNganh());
-  }, [dispatch]);
+    dispatch(getListPhong());
+    if (token) {
+      dispatch(getListBoMon(token));
+      dispatch(getListChuyenNganh(token));
+    }
+  }, [dispatch, token]);
 
   return <>{children}</>;
 }

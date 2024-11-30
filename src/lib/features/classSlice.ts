@@ -45,8 +45,10 @@ export const createClass = createAsyncThunk(
   'classHP/create',
   async (args: {
     className: string;
-    teacherId: string;
-    subjectId: number;
+    teacherIds: string[];
+    maMonHoc: string;
+    soTinChi: number;
+    tenMonHoc: string;
     pricePerTinChi: number;
   }) => {
     const res = await apiCreateLhp(args);
@@ -58,7 +60,6 @@ export const detailClass = createAsyncThunk(
   'classHP/detail',
   async (lhpId: number) => {
     const dataRes = await apiGetDetailLopHp(lhpId);
-    
 
     if (dataRes) return dataRes;
   }
@@ -67,7 +68,20 @@ export const detailClass = createAsyncThunk(
 const classSlice = createSlice({
   name: 'classHP',
   initialState,
-  reducers: {},
+  reducers: {
+    setListTeacher: (state, action) => {
+      state.current.data = {
+        ...state.current.data,
+        teacherInClass: action.payload
+      };
+    },
+    setListStudent: (state, action) => {
+      state.current.data = {
+        ...state.current.data,
+        studentInClass: action.payload
+      };
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getListClass.pending, (state) => {
@@ -108,7 +122,11 @@ const classSlice = createSlice({
       .addCase(detailClass.fulfilled, (state, action: PayloadAction<any>) => {
         state.current.loading = false;
         state.current.error = false;
-        state.current.data = action.payload;
+        state.current.data = {
+          ...action.payload,
+          teacherInClass: [],
+          studentInClass: []
+        };
       })
       .addCase(detailClass.rejected, (state) => {
         state.current.loading = false;
@@ -119,6 +137,6 @@ const classSlice = createSlice({
 
 const classReducer = classSlice.reducer;
 
-export const {} = classSlice.actions;
+export const { setListTeacher, setListStudent } = classSlice.actions;
 
 export default classReducer;

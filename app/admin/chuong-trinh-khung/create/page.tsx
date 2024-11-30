@@ -5,9 +5,9 @@ import { useRouter } from 'next/navigation';
 import { Button, Card, Form, Input, Select, Typography } from 'antd';
 import { CloseOutlined, LeftOutlined } from '@ant-design/icons';
 
-import { SubjectModel } from '@models/Subject';
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
 import { createCtk } from '@redux/features/ctkSlice';
+import { HieuSubjectModel } from '@models/Subject_Hieu';
 
 function Index() {
   const dispatch = useAppDispatch();
@@ -22,9 +22,9 @@ function Index() {
   const [selectedSubs, setSelectedSub] = useState<any[]>([]);
 
   useEffect(() => {
-    const formattedSubjects = listSubject.map((item: SubjectModel) => ({
-      value: item.id,
-      label: `${item.maHocPhan} - ${item.name}`
+    const formattedSubjects = listSubject.map((item: HieuSubjectModel) => ({
+      value: item.maMonHoc,
+      label: `${item.maMonHoc} - ${item.tenMon}`
     }));
     setListSubBk(formattedSubjects);
   }, [listSubject]);
@@ -45,7 +45,7 @@ function Index() {
       chuyenNganhId: values.chuyenNganhId,
       details: values.details.map((detail: any, index: number) => ({
         kiHoc: detail.kiHoc,
-        monHocIds: selectedSubs[index] || []
+        maMonHocs: selectedSubs[index] || []
       }))
     };
 
@@ -123,7 +123,7 @@ function Index() {
                   </Form.Item>
 
                   <Form.Item
-                    name={[field.name, 'monHocIds']}
+                    name={[field.name, 'maMonHocs']}
                     label="Môn"
                     rules={[
                       {

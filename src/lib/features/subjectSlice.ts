@@ -9,7 +9,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type SubjectState = {
   listSubject: HieuSubjectModel[];
-  current: HieuSubjectModel | null;
+  current: any;
   loading: boolean;
   error: boolean;
   isDeleted: boolean;
@@ -30,15 +30,15 @@ export const getListSubject = createAsyncThunk('subject/all', async () => {
 
 export const getDetailSubject = createAsyncThunk(
   'subject/detail',
-  async (subjectId: number) => {
-    const dataRes = await apiGetDetailSubject(subjectId);
-    return dataRes;
+  async (maMonHoc: string) => {
+    const dataRes = await apiGetDetailSubject(maMonHoc);
+    return dataRes.items;
   }
 );
 
 export const deleteSubject = createAsyncThunk(
   'subject/delete',
-  async (id: number) => {
+  async (id: string) => {
     const dataRes = await apiDeleteSubject(id);
     return dataRes;
   }
@@ -47,7 +47,11 @@ export const deleteSubject = createAsyncThunk(
 const subjectSlice = createSlice({
   name: 'subject',
   initialState,
-  reducers: {},
+  reducers: {
+    resetCurrentSubject(state) {
+      state.current = null;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getListSubject.pending, (state) => {
@@ -71,10 +75,10 @@ const subjectSlice = createSlice({
       })
       .addCase(
         getDetailSubject.fulfilled,
-        (state, action: PayloadAction<any>) => {
+        (state, action: PayloadAction<any[]>) => {
           state.loading = false;
           state.error = false;
-          state.current = action.payload;
+          state.current = action.payload[0];
         }
       )
       .addCase(getDetailSubject.rejected, (state) => {
@@ -101,6 +105,6 @@ const subjectSlice = createSlice({
 
 const subjectReducer = subjectSlice.reducer;
 
-export const {} = subjectSlice.actions;
+export const { resetCurrentSubject } = subjectSlice.actions;
 
 export default subjectReducer;
