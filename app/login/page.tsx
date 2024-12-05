@@ -1,9 +1,9 @@
-import LoginPage2 from '@views/Login/Login2';
+import LoginPage from '@views/Login/Login';
 
 function Index() {
   return (
     <div>
-      <LoginPage2 />
+      <LoginPage />
     </div>
   );
 }

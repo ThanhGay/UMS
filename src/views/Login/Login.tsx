@@ -20,7 +20,7 @@ import {
   authLoginTeacher
 } from '@redux/features/authSlice';
 
-function LoginPage2() {
+function LoginPage() {
   const { loginCode, loading, user_type } = useAppSelector(
     (state) => state.authState
   );
@@ -162,4 +162,4 @@ function LoginPage2() {
   );
 }
 
-export default LoginPage2;
+export default LoginPage;
