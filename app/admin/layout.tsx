@@ -5,7 +5,7 @@ import { Content } from 'antd/es/layout/layout';
 import MenuAdmin from '@components/common/MenuAdmin';
 
 export const metadata: Metadata = {
-  title: 'Admin'
+  title: 'Trang chủ Admin'
 };
 
 function Index(props: PropsWithChildren) {

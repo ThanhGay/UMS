@@ -152,3 +152,13 @@ export const apiGetStudentInLopQL = async (lopQLId: string) => {
 
   return data ?? {};
 };
+
+export const apiDeleteClassHP = async (lopId: number) => {
+  const url = `${ClassURL}/delete/${lopId}`;
+
+  const { data } = await axios.delete(url, {
+    headers: { 'ngrok-skip-browser-warning': 'any_value' }
+  });
+
+  return data ?? {};
+};

@@ -1,4 +1,4 @@
-import { ProgressSchedule } from '@views/Schedule';
+import { ProgressSchedule } from '@views/Student/Schedule';
 
 function Index() {
   return <ProgressSchedule />;

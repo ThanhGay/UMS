@@ -1,12 +1,12 @@
 import { Metadata } from 'next';
-import HomePage from '@views/Student/Home';
+import HomePageTeacher from '@views/Teacher/Home';
 
 export const metadata: Metadata = {
-  title: 'Trang chủ sinh viên'
+  title: 'Trang chủ giảng viên'
 };
 
 function Index() {
-  return <HomePage />;
+  return <HomePageTeacher />;
 }
 
 export default Index;

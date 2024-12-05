@@ -1,0 +1,37 @@
+.weekControls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  gap: 10px;
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  padding: 20px;
+}
+
+.day {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  text-align: left;
+}
+
+.date {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.event {
+  background-color: #4caf50;
+  color: white;
+  padding: 5px;
+  margin-bottom: 5px;
+  border-radius: 4px;
+  font-size: 14px;
+}

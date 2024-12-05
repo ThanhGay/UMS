@@ -1,26 +1,19 @@
-import { useEffect, useState } from 'react';
-import { Avatar, Button, Modal, Select, Space } from 'antd';
+import { useState } from 'react';
+import Image from 'next/image';
+import { Button, message, Modal, Select, Space } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
 
-import { useAppSelector } from '@redux/hooks';
-import { apiAddStudentsToClass, apiGetStudentInLopQL } from '@/src/api/class';
-import Image from 'next/image';
+import { useAppDispatch, useAppSelector } from '@redux/hooks';
+import { apiAddStudentsToClass } from '@/src/api/class';
+import { addStudents } from '@redux/features/classSlice';
 
 function ClassList() {
+  const dispatch = useAppDispatch();
   const { data } = useAppSelector((state) => state.classState.current);
+  const [messageAntd, contextHolder] = message.useMessage();
 
   const [selected, setSelected] = useState<string[]>([]);
   const [openModal, setOpenModal] = useState(false);
-  const [listStudent, setListStudent] = useState<any[]>([]);
-
-  useEffect(() => {
-    (async () => {
-      const dataRes = await apiGetStudentInLopQL(data?.className);
-      if (dataRes) {
-        setListStudent(dataRes.items[0]?.studentDtoss);
-      }
-    })();
-  }, [data?.className]);
 
   const onChangeSelect = (values: string[]) => {
     setSelected(values);
@@ -39,18 +32,20 @@ function ClassList() {
         });
 
         if (dataRes) {
-          console.log(dataRes);
+          dispatch(addStudents(selected));
           setSelected([]);
           setOpenModal(false);
+          messageAntd.success(dataRes);
         }
       } catch (error: any) {
-        alert(error.response.data);
+        messageAntd.error(error.response.data);
       }
     })();
   };
 
   return (
     <div className="relative min-h-10">
+      {contextHolder}
       <div className="absolute top-0 right-0">
         <Button
           onClick={() => setOpenModal(true)}
@@ -95,7 +90,7 @@ function ClassList() {
             id="dsTeacherBoMon"
             mode="multiple"
             style={{ width: '100%' }}
-            options={listStudent?.map((student: any) => {
+            options={data?.otherStudents?.map((student: any) => {
               return {
                 value: student.studentId,
                 label: student.username

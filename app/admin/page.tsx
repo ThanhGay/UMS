@@ -1,5 +1,3 @@
-'use client';
-
 function Index() {
   return <div>Trang chu Admin</div>;
 }

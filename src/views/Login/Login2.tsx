@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import {
   Button,
@@ -11,13 +12,13 @@ import {
   Spin,
   Typography
 } from 'antd';
+
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
 import {
   authLoginAdmin,
   authLoginStudent,
   authLoginTeacher
 } from '@redux/features/authSlice';
-import Image from 'next/image';
 
 function LoginPage2() {
   const { loginCode, loading, user_type } = useAppSelector(
@@ -65,7 +66,7 @@ function LoginPage2() {
           router.push('/student/home');
           break;
         case 'teacher':
-          router.push('/teacher');
+          router.push('/teacher/home');
           break;
         case 'admin':
           router.push('/admin');

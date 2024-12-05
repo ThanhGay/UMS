@@ -65,7 +65,6 @@ export const createCtk = createAsyncThunk(
     details: { kiHoc: string; monHocIds: number[] }[];
   }) => {
     const res = await apiCreateCtk(args);
-    console.log(res);
 
     if (res) return res;
   }

@@ -22,6 +22,16 @@ export const apiDetailCtk = async (id: number) => {
   return data ?? {};
 };
 
+export const apiDetailCtkByNganhId = async (chuyenNganhId: string) => {
+  const url = `${CtkUrl}/get/${chuyenNganhId}`;
+
+  const { data } = await axios.get(url, {
+    headers: { 'ngrok-skip-browser-warning': 'any_value' }
+  });
+
+  return data ?? {};
+};
+
 export const apiCreateCtk = async (args: {
   chuyenNganhId: number;
   details: {

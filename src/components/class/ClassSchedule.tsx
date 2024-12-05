@@ -4,8 +4,8 @@ import { SettingOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 
 import { useAppSelector } from '@redux/hooks';
-import styles from './ManageClass.module.scss';
 import { apiCreateSchedule } from '@/src/api/class';
+import styles from './ManageClass.module.scss';
 
 interface ClassData {
   id: number;
@@ -266,6 +266,9 @@ const ClassSchedule: React.FC<ClassScheduleProps> = () => {
           </Form.Item>
           <Form.Item name={'phong'} label="Phòng">
             <Select
+              virtual
+              showSearch
+              optionFilterProp="label"
               placeholder="Chọn phòng"
               options={listPhong.data?.map((item: any) => {
                 return {

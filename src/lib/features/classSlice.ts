@@ -1,11 +1,9 @@
 import {
   apiAllClassHP,
   apiCreateLhp,
-  apiGetDetailLopHp,
-  apiGetScheduleOfLHP,
-  apiGetStudentsOfLHP
+  apiDeleteClassHP,
+  apiGetDetailLopHp
 } from '@/src/api/class';
-import { apiAllTeacher } from '@/src/api/general';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 type REF_STATE = {
@@ -65,6 +63,15 @@ export const detailClass = createAsyncThunk(
   }
 );
 
+export const deleteClass = createAsyncThunk(
+  'classHP/delete',
+  async (lhpId: number) => {
+    const dataRes = await apiDeleteClassHP(lhpId);
+
+    return dataRes;
+  }
+);
+
 const classSlice = createSlice({
   name: 'classHP',
   initialState,
@@ -80,6 +87,24 @@ const classSlice = createSlice({
         ...state.current.data,
         studentInClass: action.payload
       };
+    },
+    setDetailClass: (state, action) => {
+      state.current.data = {
+        ...state.current.data,
+        infor: action.payload
+      };
+    },
+    setListOtherStudents: (state, action) => {
+      state.current.data = {
+        ...state.current.data,
+        otherStudents: action.payload
+      };
+    },
+    addStudents: (state, action) => {
+      state.current.data.students = [
+        ...state.current.data.students,
+        ...action.payload
+      ];
     }
   },
   extraReducers: (builder) => {
@@ -131,12 +156,33 @@ const classSlice = createSlice({
       .addCase(detailClass.rejected, (state) => {
         state.current.loading = false;
         state.current.error = true;
+      })
+      .addCase(deleteClass.pending, (state) => {
+        state.listClass.loading = true;
+        state.listClass.error = false;
+        state.isDeleted = false;
+      })
+      .addCase(deleteClass.fulfilled, (state) => {
+        state.listClass.loading = false;
+        state.listClass.error = false;
+        state.isDeleted = true;
+      })
+      .addCase(deleteClass.rejected, (state) => {
+        state.listClass.loading = false;
+        state.listClass.error = true;
+        state.isDeleted = false;
       });
   }
 });
 
 const classReducer = classSlice.reducer;
 
-export const { setListTeacher, setListStudent } = classSlice.actions;
+export const {
+  setListTeacher,
+  setListStudent,
+  setDetailClass,
+  setListOtherStudents,
+  addStudents
+} = classSlice.actions;
 
 export default classReducer;
