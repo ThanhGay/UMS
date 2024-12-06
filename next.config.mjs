@@ -11,9 +11,8 @@ const nextConfig = {
     ]
   },
   env: {
-    BASE_URL_API: 'https://60fc-116-96-47-79.ngrok-free.app/api',
-    HIEU_URL:
-      'https://834d-2001-ee0-41c1-367e-a569-dbd3-3a02-c43b.ngrok-free.app'
+    BASE_URL_API: 'https://0d98-27-72-100-108.ngrok-free.app/api',
+    HIEU_URL: 'https://8f00-27-72-100-108.ngrok-free.app'
   }
 };
 
