@@ -3,16 +3,16 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: '**',
-        port: '',
+        protocol: 'http',
+        hostname: '192.168.88.181',
+        port: '5026',
         pathname: '**'
       }
     ]
   },
   env: {
-    BASE_URL_API: 'https://0d98-27-72-100-108.ngrok-free.app/api',
-    HIEU_URL: 'https://8f00-27-72-100-108.ngrok-free.app'
+    BASE_URL_API: 'http://localhost:5271/api',
+    HIEU_URL: 'http://192.168.88.181:5026'
   }
 };
 

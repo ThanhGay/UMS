@@ -1,12 +1,8 @@
 import React from 'react';
-import { Calendar } from 'antd';
+import AdminSchedule from '@views/Admin/Schedule';
 
 const Index: React.FC = () => {
-  return (
-    <div>
-      <Calendar mode="month" style={{ padding: 12 }} />
-    </div>
-  );
+  return <AdminSchedule />;
 };
 
 export default Index;

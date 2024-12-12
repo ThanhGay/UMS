@@ -4,6 +4,7 @@ import subjectReducer from './features/subjectSlice';
 import ctkReducer from './features/ctkSlice';
 import classReducer from './features/classSlice';
 import generalReducer from './features/generalSlice';
+import scheduleReducer from './features/schedule';
 
 export const makeStore = () => {
   return configureStore({
@@ -12,7 +13,8 @@ export const makeStore = () => {
       subState: subjectReducer,
       ctkState: ctkReducer,
       classState: classReducer,
-      generalState: generalReducer
+      generalState: generalReducer,
+      scheduleState: scheduleReducer
     }
   });
 };
