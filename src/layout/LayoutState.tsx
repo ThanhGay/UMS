@@ -25,9 +25,6 @@ function LayoutState(props: PropsWithChildren) {
     dispatch(getListTeacher());
     dispatch(getListSubject());
     dispatch(getListPhong());
-    dispatch(
-      getAllSchedule({ page: 1, limit: 100, building: 'H1', caHoc: -1 })
-    );
 
     if (token) {
       dispatch(getListBoMon(token));

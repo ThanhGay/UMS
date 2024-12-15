@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Select } from 'antd';
+import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 
-import { useAppSelector } from '@redux/hooks';
+import { useAppDispatch, useAppSelector } from '@redux/hooks';
+import { getAllSchedule, getTeacherSchedule } from '@redux/features/schedule';
 import style from './style.module.scss';
-import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
 
 const daysOfWeek = [
   'Thứ 2',
@@ -62,13 +63,46 @@ const listCaHoc = [
 ];
 
 const AdminSchedule: React.FC = () => {
-  const { list: listSchedule } = useAppSelector((state) => state.scheduleState);
+  const dispatch = useAppDispatch();
+  const { data: _listSchedule } = useAppSelector(
+    (state) => state.scheduleState
+  ).list;
   const { data: listTeacher } = useAppSelector(
     (state) => state.generalState.listTeacher
   );
-  const { data: listRoom } = useAppSelector(
-    (state) => state.generalState.listPhong
-  );
+  const { data } = useAppSelector((state) => state.generalState.listPhong);
+
+  const [listRoom, setListRoom] = useState([]);
+  const [listSchedule, setListSchedule] = useState<any[]>([]);
+  const [listScheduleFilter, setListScheduleFilter] = useState<any[]>([]);
+
+  const onChangeBuilding = async (itemSelected: any) => {
+    // set danh sách phòng tương ứng với tòa nhà đã chọn
+    setListRoom(
+      data.filter((item: any) => item.building === itemSelected.value)
+    );
+
+    // call api lấy danh sách các buổi học tương ứng với tòa nhà
+    const dataRes = await dispatch(
+      getAllSchedule({
+        page: 1,
+        limit: 100,
+        building: itemSelected.value,
+        caHoc: -1
+      })
+    );
+
+    if (dataRes.meta.requestStatus === 'fulfilled') {
+      setListSchedule(dataRes.payload?.items);
+      setListScheduleFilter(dataRes.payload?.items);
+    }
+  };
+
+  const onChangeTeacher = async (selected: any) => {
+    setListScheduleFilter(
+      listSchedule.filter((item) => item.teacherId === selected)
+    );
+  };
 
   const [currentWeek, setCurrentWeek] = useState(new Date());
 
@@ -90,7 +124,7 @@ const AdminSchedule: React.FC = () => {
     const endOfWeek = new Date(startOfWeek);
     endOfWeek.setDate(startOfWeek.getDate() + 6);
 
-    return listSchedule.filter(({ startAt }) => {
+    return listScheduleFilter.filter(({ startAt }) => {
       const date = new Date(startAt);
       return date >= startOfWeek && date <= endOfWeek;
     });
@@ -111,88 +145,92 @@ const AdminSchedule: React.FC = () => {
     });
 
     return (
-      <table className="table-auto w-full border-collapse border border-gray-300">
-        <thead>
-          <tr>
-            <th className="border border-gray-300 px-4 py-2">Phòng</th>
-            {days.map((day, index) => (
-              <th key={index} className="border border-gray-300 px-4 py-2">
-                <p className="text-base font-bold">{daysOfWeek[index]}</p>
-                <p className="italic font-normal">
-                  {dayjs(day).format('DD/MM/YYYY')}
-                </p>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {listRoom.map((room: any) => (
-            <tr key={room.id}>
-              <td className="border border-gray-300 px-4 py-2 text-center font-bold w-1/8">
-                {room.name}.{room.building}
-              </td>
-              {days.map((day, index) => {
-                const schedules = weeklySchedule.filter(
-                  ({ startAt, roomName }) =>
-                    dayjs(startAt).isSame(day, 'day') &&
-                    roomName === `${room.name}.${room.building}`
-                );
-
-                return (
-                  <td
-                    key={index}
-                    className="border border-gray-300 p-1"
-                    style={{ width: '12.5%' }}
-                  >
-                    {schedules.length > 0 ? (
-                      schedules.map((schedule) => {
-                        const caHocItem = listCaHoc.find(
-                          (ca) => ca.value === schedule.caHoc
-                        );
-                        return (
-                          <div
-                            key={schedule.scheduleId}
-                            className={style.scheduleItem}
-                            style={{
-                              backgroundColor: caHocItem?.bgColor,
-                              color: caHocItem?.color
-                            }}
-                            onClick={() => handleClick(schedule)}
-                          >
-                            <div>
-                              <strong>{schedule.subjectName}</strong>
-                            </div>
-                            <div>
-                              Lớp: <i>{schedule.className}</i>
-                            </div>
-                            <div>Tiết: {caHocItem?.range}</div>
-                            <div>Gờ: {caHocItem?.time}</div>
-                            <div className={style.tenGV}>
-                              Giảng viên: <b>{schedule.teacherId}</b>
-                            </div>
-                            {schedule.status === 2 && (
-                              <div className={style.tamngung}>
-                                <span>Tạm ngưng</span>
-                              </div>
-                            )}
-                          </div>
-                        );
-                      })
-                    ) : (
-                      <div></div>
-                    )}
-                  </td>
-                );
-              })}
+      <div
+        className="overflow-y-auto"
+        style={{ maxHeight: 'calc(100vh - 250px)' }}
+      >
+        <table className="table-auto w-full border-collapse border border-gray-300">
+          <thead className="sticky top-0 bg-white z-10">
+            <tr>
+              <th className="border border-gray-300 px-4 py-2">Phòng</th>
+              {days.map((day, index) => (
+                <th key={index} className="border border-gray-300 px-4 py-2">
+                  <p className="text-base font-bold">{daysOfWeek[index]}</p>
+                  <p className="italic font-normal">
+                    {dayjs(day).format('DD/MM/YYYY')}
+                  </p>
+                </th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {listRoom.map((room: any) => (
+              <tr key={room.id}>
+                <td className="border border-gray-300 px-4 py-2 text-center font-bold w-1/8">
+                  {room.name}.{room.building}
+                </td>
+                {days.map((day, index) => {
+                  const schedules = weeklySchedule.filter(
+                    ({ startAt, roomName }) =>
+                      dayjs(startAt).isSame(day, 'day') &&
+                      roomName === `${room.name}.${room.building}`
+                  );
+                  return (
+                    <td
+                      key={index}
+                      className="border border-gray-300 p-1"
+                      style={{ width: '12.5%' }}
+                    >
+                      {schedules.length > 0 ? (
+                        schedules.map((schedule) => {
+                          const caHocItem = listCaHoc.find(
+                            (ca) => ca.value === schedule.caHoc
+                          );
+                          return (
+                            <div
+                              key={schedule.scheduleId}
+                              className={style.scheduleItem}
+                              style={{
+                                backgroundColor: caHocItem?.bgColor,
+                                color: caHocItem?.color
+                              }}
+                              onClick={() => handleClick(schedule)}
+                            >
+                              <div>
+                                <strong>{schedule.subjectName}</strong>
+                              </div>
+                              <div>
+                                Lớp: <i>{schedule.className}</i>
+                              </div>
+                              <div>Tiết: {caHocItem?.range}</div>
+                              <div>Gờ: {caHocItem?.time}</div>
+                              <div className={style.tenGV}>
+                                Giảng viên: <b>{schedule.teacherId}</b>
+                              </div>
+                              {schedule.status === 2 && (
+                                <div className={style.tamngung}>
+                                  <span>Tạm ngưng</span>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })
+                      ) : (
+                        <div></div>
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     );
   };
 
   return (
-    <div className="bg-white p-4 rounded-2xl h-screen">
+    <div className="bg-white p-4 rounded-2xl h-full">
       {/* Thanh filter */}
       <div className="w-full flex gap-4 items-center justify-center">
         <div className="flex items-center gap-2">
@@ -201,9 +239,10 @@ const AdminSchedule: React.FC = () => {
           </label>
           <Select
             id="building"
-            defaultValue={'H1'}
             labelInValue
+            placeholder="Chọn tòa nhà cần xem lịch"
             options={[{ value: 'H1' }, { value: 'H2' }, { value: 'H3' }]}
+            onChange={onChangeBuilding}
           />
         </div>
 
@@ -220,6 +259,7 @@ const AdminSchedule: React.FC = () => {
                 label: t.teacherId + ' - ' + t.tenGiangVien
               };
             })}
+            onChange={onChangeTeacher}
           />
         </div>
       </div>
@@ -245,17 +285,15 @@ const AdminSchedule: React.FC = () => {
         <div>{renderTable()}</div>
 
         {/* chú thích */}
-        <div className="flex items-center justify-center gap-6 mt-8">
+        <div className={style.noteContainer}>
           {listCaHoc.map((ca: any) => {
             return (
               <div key={ca.value} className="flex gap-1">
                 <div
-                  className="px-4 py-2 rounded border-2"
+                  className={style.emptyBox}
                   style={{ backgroundColor: ca.bgColor }}
-                >
-                  {' '}
-                </div>
-                <div>{ca.name}</div>
+                />
+                <div className="font-medium text-base">{ca.name}</div>
               </div>
             );
           })}

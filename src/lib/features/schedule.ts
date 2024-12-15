@@ -7,7 +7,11 @@ import {
 } from '@/src/api/schedule';
 
 export type ScheduleState = {
-  list: any[];
+  list: {
+    data: any[];
+    isLoading: boolean;
+    isError: boolean;
+  };
   current: any;
   class: any[];
   student: any[];
@@ -52,7 +56,11 @@ export const getLopHpSchedule = createAsyncThunk(
 );
 
 const initialState: ScheduleState = {
-  list: [],
+  list: {
+    data: [],
+    isLoading: false,
+    isError: false
+  },
   class: [],
   student: [],
   teacher: [],
@@ -65,12 +73,22 @@ const scheduleSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(getAllSchedule.pending, (state) => {
+        state.list.isLoading = true;
+        state.list.isError = false;
+      })
       .addCase(
         getAllSchedule.fulfilled,
         (state, action: PayloadAction<any>) => {
-          state.list = action.payload.items;
+          state.list.isLoading = false;
+          state.list.isError = false;
+          state.list.data = action.payload.items;
         }
       )
+      .addCase(getAllSchedule.rejected, (state) => {
+        state.list.isLoading = false;
+        state.list.isError = true;
+      })
       .addCase(
         getLopHpSchedule.fulfilled,
         (state, action: PayloadAction<any>) => {
