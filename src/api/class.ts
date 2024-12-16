@@ -106,10 +106,10 @@ export const apiGetTeacherIdInClass = async (lopHpId: number) => {
   return data ?? {};
 };
 
-export const apiGetTeacherInClass = async (studentIds: string[]) => {
+export const apiGetTeacherInClass = async (teacherIds: string[]) => {
   const url = `${HieuURL}/get-teacher-by-id`;
 
-  const { data } = await axios.post(url, studentIds, {
+  const { data } = await axios.post(url, teacherIds, {
     headers: { 'ngrok-skip-browser-warning': 'any_value' }
   });
 

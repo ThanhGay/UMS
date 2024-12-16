@@ -42,7 +42,7 @@ export const apiGetScheduleOfTeacher = async (teacherId: string) => {
 export const apiPostPoneSchedule = async (scheduleId: number) => {
   const url = `${ScheduleURL}/postpone/${scheduleId}`;
 
-  const { data } = await axios.post(url, null, {
+  const { data } = await axios.put(url, null, {
     headers: { 'ngrok-skip-browser-warning': 'any_value' }
   });
 

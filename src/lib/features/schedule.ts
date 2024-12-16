@@ -70,7 +70,21 @@ const initialState: ScheduleState = {
 const scheduleSlice = createSlice({
   name: 'schedule',
   initialState,
-  reducers: {},
+  reducers: {
+    setCurrentSchedule: (state, action: PayloadAction<any>) => {
+      state.current = action.payload;
+    },
+    setPostpone: (state, action: PayloadAction<any>) => {
+      const index = state.list.data.findIndex(
+        (item) => item.scheduleId === action.payload
+      );
+
+      // If the element is found, update its status
+      if (index !== -1) {
+        state.list.data[index].status = 2;
+      }
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAllSchedule.pending, (state) => {
@@ -112,6 +126,6 @@ const scheduleSlice = createSlice({
 
 const scheduleReducer = scheduleSlice.reducer;
 
-export const {} = scheduleSlice.actions;
+export const { setCurrentSchedule, setPostpone } = scheduleSlice.actions;
 
 export default scheduleReducer;

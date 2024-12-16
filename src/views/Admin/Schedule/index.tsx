@@ -1,12 +1,21 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Select } from 'antd';
-import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
+import {
+  ArrowLeftOutlined,
+  ArrowRightOutlined,
+  PlusOutlined
+} from '@ant-design/icons';
 import dayjs from 'dayjs';
 
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
-import { getAllSchedule, getTeacherSchedule } from '@redux/features/schedule';
+import {
+  getAllSchedule,
+  setCurrentSchedule
+} from '@redux/features/schedule';
+
+import { ModalCreateSchedule, ModalPostponeSchedule } from '@components/modal';
 import style from './style.module.scss';
 
 const daysOfWeek = [
@@ -75,6 +84,8 @@ const AdminSchedule: React.FC = () => {
   const [listRoom, setListRoom] = useState([]);
   const [listSchedule, setListSchedule] = useState<any[]>([]);
   const [listScheduleFilter, setListScheduleFilter] = useState<any[]>([]);
+  const [openPopup, setOpenPopup] = useState(false); // pop-up view detail schedule
+  const [openModalCreate, setOpenModalCreate] = useState(false); // pop-up create schedule
 
   const onChangeBuilding = async (itemSelected: any) => {
     // set danh sách phòng tương ứng với tòa nhà đã chọn
@@ -130,8 +141,9 @@ const AdminSchedule: React.FC = () => {
     });
   };
 
-  const handleClick = (item: any) => {
-    console.log(item);
+  const handleClick = async (item: any) => {
+    dispatch(setCurrentSchedule(item));
+    setOpenPopup(true);
   };
 
   const renderTable = () => {
@@ -262,6 +274,15 @@ const AdminSchedule: React.FC = () => {
             onChange={onChangeTeacher}
           />
         </div>
+        <div>
+          <Button
+            type="dashed"
+            icon={<PlusOutlined />}
+            onClick={() => setOpenModalCreate(true)}
+          >
+            Tạo
+          </Button>
+        </div>
       </div>
 
       {/* Giao diện lịch học */}
@@ -298,6 +319,15 @@ const AdminSchedule: React.FC = () => {
             );
           })}
         </div>
+
+        <ModalPostponeSchedule
+          open={openPopup}
+          onCancel={() => setOpenPopup(false)}
+        />
+        <ModalCreateSchedule
+          open={openModalCreate}
+          onCancel={() => setOpenModalCreate(false)}
+        />
       </div>
     </div>
   );
