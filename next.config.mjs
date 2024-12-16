@@ -12,7 +12,8 @@ const nextConfig = {
   },
   env: {
     BASE_URL_API: 'http://localhost:5271/api',
-    HIEU_URL: 'http://192.168.88.181:5026'
+    HIEU_URL:
+      'https://6a62-2001-ee0-41c1-367e-d957-c702-4e1d-68af.ngrok-free.app'
   }
 };
 
