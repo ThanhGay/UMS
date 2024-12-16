@@ -99,9 +99,11 @@ function PostponeSchedule({
           </span>
         </Row>
 
-        <div className="tamngung">
-          <span>Tạm ngưng</span>
-        </div>
+        {scheduleItem?.status === 2 && (
+          <div className="tamngung">
+            <span>Tạm ngưng</span>
+          </div>
+        )}
       </div>
 
       <div className="text-end flex gap-4 mt-8">
