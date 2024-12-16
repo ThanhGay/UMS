@@ -13,12 +13,22 @@ import {
   getListTeacher
 } from '@redux/features/generalSlice';
 import { getAllSchedule } from '@redux/features/schedule';
+import { getCookie } from '../cookie';
+import { setToken } from '@redux/features/authSlice';
 
 function LayoutState(props: PropsWithChildren) {
   const { children } = props;
   const { token } = useAppSelector((state) => state.authState);
 
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const tokenInCookie = getCookie('token');
+    if (tokenInCookie) {
+      dispatch(setToken(tokenInCookie));
+    }
+  }, []);
+
   useEffect(() => {
     dispatch(getListCtk());
     dispatch(getListClass());

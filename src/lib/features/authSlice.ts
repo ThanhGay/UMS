@@ -4,6 +4,7 @@ import {
   apiLoginTeacher
 } from '@/src/api/auth';
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { deleteCookie, setCookie } from '@/src/cookie';
 
 export type AuthState = {
   user: any;
@@ -60,6 +61,7 @@ const authSlice = createSlice({
     },
     setToken: (state, action) => {
       state.token = action.payload;
+      setCookie('token', action.payload);
     },
     setUserType: (state, action: PayloadAction<string>) => {
       state.user_type = action.payload;
@@ -69,6 +71,7 @@ const authSlice = createSlice({
       state.user = null;
       state.token = '';
       state.user_type = '';
+      deleteCookie('token');
     }
   },
   extraReducers: (builder) => {
@@ -85,6 +88,7 @@ const authSlice = createSlice({
           state.user = action.payload;
           state.token = action.payload.token;
           state.loading = false;
+          setCookie('token', action.payload.token);
         }
       )
       .addCase(authLoginStudent.rejected, (state) => {
@@ -103,6 +107,7 @@ const authSlice = createSlice({
           state.user = action.payload;
           state.token = action.payload.token;
           state.loading = false;
+          setCookie('token', action.payload.token);
         }
       )
       .addCase(authLoginTeacher.rejected, (state) => {
@@ -121,6 +126,7 @@ const authSlice = createSlice({
           state.user = action.payload;
           state.token = action.payload.token;
           state.loading = false;
+          setCookie('token', action.payload.token);
         }
       )
       .addCase(authLoginAdmin.rejected, (state) => {
