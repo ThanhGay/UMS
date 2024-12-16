@@ -9,9 +9,15 @@ import { apiPostPoneSchedule } from '@/src/api/schedule';
 import { setPostpone } from '@redux/features/schedule';
 import './style.scss';
 
-function PostponeSchedule(props: ModalProps) {
+function PostponeSchedule({
+  open,
+  onCancel
+}: {
+  open: boolean;
+  onCancel: () => void;
+}) {
   const dispatch = useAppDispatch();
-  const { open, onCancel } = props;
+  // const { open, onCancel } = props;
   const [teacherName, setTeacherName] = useState('');
 
   const scheduleItem = useAppSelector((state) => state.scheduleState.current);

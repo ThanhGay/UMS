@@ -10,10 +10,7 @@ import {
 import dayjs from 'dayjs';
 
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
-import {
-  getAllSchedule,
-  setCurrentSchedule
-} from '@redux/features/schedule';
+import { getAllSchedule, setCurrentSchedule } from '@redux/features/schedule';
 
 import { ModalCreateSchedule, ModalPostponeSchedule } from '@components/modal';
 import style from './style.module.scss';

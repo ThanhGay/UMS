@@ -11,8 +11,14 @@ import {
 
 const { RangePicker } = DatePicker;
 
-function CreateSchedule(props: ModalProps) {
-  const { open, onCancel } = props;
+function CreateSchedule({
+  open,
+  onCancel
+}: {
+  open: boolean;
+  onCancel: () => void;
+}) {
+  // const { open, onCancel } = props;
   const { listPhong } = useAppSelector((state) => state.generalState);
   const { data: listClass } = useAppSelector(
     (state) => state.classState.listClass
@@ -48,12 +54,11 @@ function CreateSchedule(props: ModalProps) {
 
     try {
       const dataRes = await apiCreateSchedule(bodyData);
-
       if (dataRes) {
         onCancel();
       }
-    } catch (error: any) {
-      alert(error.response.data);
+    } catch (error) {
+      console.error('Error creating schedule:', error);
     }
   };
   return (

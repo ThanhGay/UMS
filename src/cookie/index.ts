@@ -4,7 +4,7 @@ export function setCookie(cookieName: string, cookieValue: any) {
 }
 export function getCookie(cookieName: string) {
   const result = window.localStorage.getItem(cookieName);
-  return JSON.parse(result);
+  if (result) return JSON.parse(result);
 }
 export function deleteCookie(cookieName: string) {
   window.localStorage.removeItem(cookieName);
