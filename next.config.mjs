@@ -12,9 +12,9 @@ const nextConfig = {
   },
   env: {
     BASE_URL_API:
-      'https://5e1e-2401-d800-1e1-7f5f-e870-3bd5-6c00-6cc5.ngrok-free.app/api',
+      'https://2526-2402-800-7d91-a936-dc14-d766-b56e-7dab.ngrok-free.app/api',
     HIEU_URL:
-      'https://edf0-2001-ee0-41c1-367e-d957-c702-4e1d-68af.ngrok-free.app'
+      'https://5106-2001-ee0-41c1-367e-7cae-c3e9-1fe9-37fd.ngrok-free.app'
   }
 };
 
