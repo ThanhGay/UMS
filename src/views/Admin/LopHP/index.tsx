@@ -39,6 +39,9 @@ function AdminManageClassHP() {
   const { data: listClass, loading } = useAppSelector(
     (state) => state.classState.listClass
   );
+  const { data: listTeacher } = useAppSelector(
+    (state) => state.generalState.listTeacher
+  );
   const { isCreated, isDeleted } = useAppSelector((state) => state.classState);
 
   const [id, setId] = useState<number>(-1);
@@ -52,26 +55,30 @@ function AdminManageClassHP() {
     {
       title: 'Id',
       dataIndex: 'id',
-      key: 'id'
+      key: 'id',
+      width: '7%'
     },
     {
       title: 'Tên lớp',
       dataIndex: 'className',
       key: 'className',
       align: 'center',
-      render: (value) => <div className="text-start">{value}</div>
+      render: (value) => <div className="text-start">{value}</div>,
+      width: '10%'
     },
     {
       title: 'Mã học phần',
       dataIndex: 'maMonHoc',
       key: 'maMonHoc',
-      align: 'center'
+      align: 'center',
+      width: '10%'
     },
     {
       title: 'Môn học',
       dataIndex: 'tenMonHoc',
       key: 'tenMonHoc',
-      align: 'center'
+      align: 'center',
+      width: '25%'
     },
     {
       title: 'Giảng viên',
@@ -79,10 +86,13 @@ function AdminManageClassHP() {
       key: 'teacherIds',
       align: 'center',
       render: (value) => {
+        const names = listTeacher.filter((t: any) =>
+          value.includes(t.teacherId)
+        );
         return (
-          <div className="flex gap-1">
-            {value.map((id: any, idx: number) => (
-              <p key={idx}>{id},</p>
+          <div className="text-start">
+            {names.map((name: any, idx: number) => (
+              <p key={idx}>{name.tenGiangVien}</p>
             ))}
           </div>
         );
@@ -92,19 +102,22 @@ function AdminManageClassHP() {
       title: 'Số tín chỉ',
       dataIndex: 'soTinChi',
       key: 'soTinChi',
-      align: 'center'
+      align: 'center',
+      width: '10%'
     },
     {
       title: 'Số buổi học',
       dataIndex: 'totalLesson',
       key: 'totalLesson',
-      align: 'center'
+      align: 'center',
+      width: '10%'
     },
     {
       title: 'Thao tác',
       dataIndex: 'action',
       key: 'action',
       align: 'center',
+      width: '10%',
       render: (_, record) => (
         <Space>
           <Tooltip title="Show">

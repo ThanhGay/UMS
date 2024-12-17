@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Button, Select } from 'antd';
+import { Button, message, Select } from 'antd';
 import {
   ArrowLeftOutlined,
   ArrowRightOutlined,
@@ -78,11 +78,20 @@ const AdminSchedule: React.FC = () => {
   );
   const { data } = useAppSelector((state) => state.generalState.listPhong);
 
+  const [messageAntd, contextHolder] = message.useMessage();
+
   const [listRoom, setListRoom] = useState([]);
   const [listSchedule, setListSchedule] = useState<any[]>([]);
   const [listScheduleFilter, setListScheduleFilter] = useState<any[]>([]);
   const [openPopup, setOpenPopup] = useState(false); // pop-up view detail schedule
   const [openModalCreate, setOpenModalCreate] = useState(false); // pop-up create schedule
+
+  const teacherOptions = listTeacher?.map((t: any) => {
+    return {
+      value: t.teacherId,
+      label: t.teacherId + ' - ' + t.tenGiangVien
+    };
+  });
 
   const onChangeBuilding = async (itemSelected: any) => {
     // set danh sách phòng tương ứng với tòa nhà đã chọn
@@ -214,7 +223,15 @@ const AdminSchedule: React.FC = () => {
                               <div>Tiết: {caHocItem?.range}</div>
                               <div>Gờ: {caHocItem?.time}</div>
                               <div className={style.tenGV}>
-                                Giảng viên: <b>{schedule.teacherId}</b>
+                                Giảng viên:{' '}
+                                <b>
+                                  {
+                                    listTeacher.filter(
+                                      (item: any) =>
+                                        item.teacherId === schedule.teacherId
+                                    )[0]?.tenGiangVien
+                                  }
+                                </b>
                               </div>
                               {schedule.status === 2 && (
                                 <div className={style.tamngung}>
@@ -240,6 +257,7 @@ const AdminSchedule: React.FC = () => {
 
   return (
     <div className="bg-white p-4 rounded-2xl h-full">
+      {contextHolder}
       {/* Thanh filter */}
       <div className="w-full flex gap-4 items-center justify-center">
         <div className="flex items-center gap-2">
@@ -255,19 +273,16 @@ const AdminSchedule: React.FC = () => {
           />
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-[300px]">
           <label htmlFor="teacher" className="cursor-pointer">
             Giảng viên:
           </label>
           <Select
             id="teacher"
+            showSearch
             placeholder="Chọn giảng viên muốn xem"
-            options={listTeacher?.map((t: any) => {
-              return {
-                value: t.teacherId,
-                label: t.teacherId + ' - ' + t.tenGiangVien
-              };
-            })}
+            options={teacherOptions}
+            style={{ width: '100%' }}
             onChange={onChangeTeacher}
           />
         </div>
@@ -320,10 +335,12 @@ const AdminSchedule: React.FC = () => {
         <ModalPostponeSchedule
           open={openPopup}
           onCancel={() => setOpenPopup(false)}
+          message={messageAntd}
         />
         <ModalCreateSchedule
           open={openModalCreate}
           onCancel={() => setOpenModalCreate(false)}
+          message={messageAntd}
         />
       </div>
     </div>

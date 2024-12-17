@@ -246,10 +246,10 @@ const ClassSchedule: React.FC<ClassScheduleProps> = () => {
               placeholder="Ca học"
               options={[
                 { value: 1, label: 'Ca 1 - Tiết 1 - 3 (06:45 - 09:10)' },
-                { value: 2, label: 'Ca 2 - TIết 4 - 6 (09:25 - 11:50)' },
-                { value: 3, label: 'Ca 3 - TIết 7 - 9 (12:15 - 14:40)' },
-                { value: 4, label: 'Ca 4 - TIết 10 - 12 (14:55 - 17:20)' },
-                { value: 5, label: 'Ca 5 - TIết 13 - 15 (18:00 - 20:25)' }
+                { value: 2, label: 'Ca 2 - Tiết 4 - 6 (09:25 - 11:50)' },
+                { value: 3, label: 'Ca 3 - Tiết 7 - 9 (12:15 - 14:40)' },
+                { value: 4, label: 'Ca 4 - Tiết 10 - 12 (14:55 - 17:20)' },
+                { value: 5, label: 'Ca 5 - Tiết 13 - 15 (18:00 - 20:25)' }
               ]}
             />
           </Form.Item>

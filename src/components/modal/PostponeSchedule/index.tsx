@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Button, Col, Modal, ModalProps, Row } from 'antd';
+import { Button, Col, Modal, Row } from 'antd';
 import dayjs from 'dayjs';
 
 import { useAppDispatch, useAppSelector } from '@redux/hooks';
@@ -11,22 +10,24 @@ import './style.scss';
 
 function PostponeSchedule({
   open,
-  onCancel
+  onCancel,
+  message
 }: {
   open: boolean;
   onCancel: () => void;
+  message: any;
 }) {
   const dispatch = useAppDispatch();
   // const { open, onCancel } = props;
-  const [teacherName, setTeacherName] = useState('');
 
+  const { data: listTeacher } = useAppSelector(
+    (state) => state.generalState.listTeacher
+  );
   const scheduleItem = useAppSelector((state) => state.scheduleState.current);
 
-  useEffect(() => {
-    (async () => {
-      const dataRes = null;
-    })();
-  }, []);
+  const teacherName = listTeacher.filter(
+    (item: any) => item.teacherId === scheduleItem?.teacherId
+  )[0]?.tenGiangVien;
 
   let _time = '',
     _tiet = '';
@@ -58,10 +59,14 @@ function PostponeSchedule({
       okText: 'Xác nhận',
       cancelText: 'Hủy',
       onOk: async () => {
-        const dataRes = await apiPostPoneSchedule(scheduleItem?.scheduleId);
-        if (dataRes) {
-          dispatch(setPostpone(scheduleItem?.scheduleId));
-          onCancel();
+        try {
+          const dataRes = await apiPostPoneSchedule(scheduleItem?.scheduleId);
+          if (dataRes) {
+            dispatch(setPostpone(scheduleItem?.scheduleId));
+            onCancel();
+          }
+        } catch (error: any) {
+          message.error(error.response.data);
         }
       },
       title: 'Bạn chắc chắn muốn cho buổi học này nghỉ?'
@@ -112,7 +117,7 @@ function PostponeSchedule({
           onClick={handleOk}
           disabled={scheduleItem?.status === 2}
         >
-          Nghỉ
+          Tạm ngưng
         </Button>
         <Button onClick={onCancel}>Đóng</Button>
       </div>
