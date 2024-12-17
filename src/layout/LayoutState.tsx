@@ -15,6 +15,7 @@ import {
 import { getAllSchedule } from '@redux/features/schedule';
 import { getCookie } from '../cookie';
 import { setToken } from '@redux/features/authSlice';
+import { apiSyncSchedule } from '../api/schedule';
 
 function LayoutState(props: PropsWithChildren) {
   const { children } = props;
@@ -30,6 +31,7 @@ function LayoutState(props: PropsWithChildren) {
   }, []);
 
   useEffect(() => {
+    apiSyncSchedule();
     dispatch(getListCtk());
     dispatch(getListClass());
     dispatch(getListTeacher());

@@ -2,6 +2,16 @@ import axios from 'axios';
 
 const ScheduleURL = `${process.env.BASE_URL_API}/Schedule`;
 
+export const apiSyncSchedule = async () => {
+  const url = `${ScheduleURL}/sync`;
+
+  const { data } = await axios.post(url, null, {
+    headers: { 'ngrok-skip-browser-warning': 'any_value' }
+  });
+
+  return data ?? {};
+};
+
 export const apiGetAllSchedule = async (args: {
   page?: number;
   limit?: number;
