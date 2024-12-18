@@ -10,16 +10,16 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: '5106-2001-ee0-41c1-367e-7cae-c3e9-1fe9-37fd.ngrok-free.app',
+        hostname: 'e6e4-2001-ee0-41c1-367e-4d26-e8ea-7b6e-1c42.ngrok-free.app',
         port: '',
         pathname: '**'
       }
     ]
   },
   env: {
-    BASE_URL_API: 'http://localhost:5271/api',
+    BASE_URL_API: 'https://f83c-116-96-47-118.ngrok-free.app',
     HIEU_URL:
-      'https://5106-2001-ee0-41c1-367e-7cae-c3e9-1fe9-37fd.ngrok-free.app'
+      'https://e6e4-2001-ee0-41c1-367e-4d26-e8ea-7b6e-1c42.ngrok-free.app'
   }
 };
 
